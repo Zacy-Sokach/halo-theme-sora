@@ -32,3 +32,11 @@ Sora 意为「穹」，象征着无限的可能性、广阔的空间和创造力
 HarmonyOS Sans SC 调用服务器本地字体，其他字体调用第三方 [CDN](https://fonts.zeoseven.com/)。
 
 最后选择 `ui-serif`、`serif`，`ui-sans-serif`、`sans-serif`， `ui-monospace`、`monospace` 作为 fallback 字体。
+
+* 致谢
+
+- [Pedro-null/halo-theme-hingle2.0](https://github.com/Pedro-null/halo-theme-hingle2.0)
+
+- [Aziteee/halo-theme-lapis: A clean Halo theme in blue tones](https://github.com/Aziteee/halo-theme-lapis)
+
+- [纸鹿摸鱼处](https://blog.zhilu.cyou/)
