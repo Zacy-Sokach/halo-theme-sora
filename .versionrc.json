@@ -1,0 +1,12 @@
+{
+"types": [
+    {"type": "feat", "section": "✨ Features"},
+    {"type": "fix", "section": "🐞 Bug Fixes"},
+    {"type": "docs", "section": "📝 Docs"},
+    {"type": "style", "section": "🌈 Style"},
+    {"type": "refactor", "section": "Others"},
+    {"type": "chore", "section": "Others"},
+    {"type": "chore(release)", "section": "Others"},
+    {"type": "revert", "section": "Others"}
+]
+}
