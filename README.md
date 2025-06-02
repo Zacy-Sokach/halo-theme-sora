@@ -1,5 +1,5 @@
 > [!NOTE]
-> 本项目已不再活跃，若对本主题感兴趣，欢迎使用[静态框架 Astro 重构版本](https://github.com/Liksone/astro-theme-sora)
+> 本项目已不再活跃，若对本主题感兴趣，欢迎使用静态框架 Astro 的[重构版本](https://github.com/Liksone/astro-theme-sora)。
 
 <h1 align="center">Sora</h1>
 
