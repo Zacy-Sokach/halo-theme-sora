@@ -39,7 +39,7 @@
   </tr>
   <tr>
     <td>中文</td>
-    <td rowspan=3>思源宋体<br />Noto Serif SC</td>
+    <td rowspan=3>思源宋体<br />Noto Serif CJK</td>
     <td rowspan=3>HarmonyOS Sans SC</td>
     <td rowspan=3>Maple Mono NF CN</td>
     <td>霞鹜文楷</td>
