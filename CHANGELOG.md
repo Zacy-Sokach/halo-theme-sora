@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.5.17](https://github.com/Liksone/halo-theme-sora/compare/v0.5.16...v0.5.17) (2025-06-03)
+
+
+### ✨ Features
+
+* **首页:** 添加社交媒体——TikTok ([c9031b5](https://github.com/Liksone/halo-theme-sora/commit/c9031b579cf55291de401db88180e3ccc1127389)), closes [#32](https://github.com/Liksone/halo-theme-sora/issues/32)
+
 ## [0.5.16](https://github.com/Liksone/halo-theme-sora/compare/v0.5.15...v0.5.16) (2025-06-03)
 
 
