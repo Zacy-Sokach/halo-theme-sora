@@ -92,6 +92,8 @@ spec:
                 - label: Telegram
                   value: telegram
                   # value: { name: "telegram", icon: "ic--baseline-telegram" }
+                - label: TikTok
+                  value: tiktok
                 - label: Twitter/X
                   value: twitter
                   # value: { name: "twitter", icon: "si--twitter-line" }
