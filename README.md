@@ -19,6 +19,7 @@
 - [风中的轩语](https://blog.moxuan.xin)
 - [银色星球](https://blog.sss.wiki)
 - [个人博客](https://zdbxll.cn)
+- [禧语许](https://www.bytecanvas.top)
 
 # 设计思路
 
