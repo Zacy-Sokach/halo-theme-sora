@@ -16,6 +16,12 @@ jobs:
         uses: actions/setup-node@v4 # 使用 actions/setup-node Action
         with:
           node-version: "20" # 指定 Node.js 版本为 20
+          # --- 缓存配置开始 ---
+          # 启用 pnpm 缓存，这将根据 pnpm-lock.yaml 的内容生成或恢复缓存
+          cache: 'pnpm'
+          # 当 pnpm-lock.yaml 文件内容发生变化时，缓存将被视为失效，从而重新安装依赖
+          cache-dependency-path: pnpm-lock.yaml
+          # --- 缓存配置结束 ---
 
       - name: 设置 pnpm # 步骤名称：配置 pnpm 包管理器
         uses: pnpm/action-setup@v3 # 使用 pnpm/action-setup Action
@@ -23,10 +29,11 @@ jobs:
           version: "10" # 指定 pnpm 版本为 10
 
       - name: 安装项目依赖 # 步骤名称：安装 Node.js 模块依赖
+        # 此步骤将利用 setup-node 和 setup-pnpm 配置的缓存
         run: pnpm install # 运行 pnpm install 命令
 
       - name: 清理 dist 目录 # 新增步骤：清除旧的构建产物
-        run: rm -rf dist # 确保每次构建都是全新的
+        run: rm -rf dist # 确保每次构建都是全新的，避免旧文件干扰
 
       - name: 构建主题包 # 步骤名称：执行主题的构建和打包过程
         # 此命令通常在 package.json 的 "scripts" 中定义，
@@ -55,7 +62,7 @@ jobs:
         run: |
           cd dist # 进入 dist 目录
           # 将 dist 目录下的所有文件和文件夹压缩到 ZIP 包的根目录，并放置在上一级目录
-          # 这样解压后就是主题的根目录结构
+          # 这样解压后就是主题的根目录结构，无需额外的解压文件夹
           zip -r ../theme-package-${{ github.event.release.tag_name }}.zip ./*
         id: compress_step
 
