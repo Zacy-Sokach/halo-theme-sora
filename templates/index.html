@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="zh-CN" xmlns:th="https://www.thymeleaf.org">
+  <head th:replace="~{module/head(title = ${site.title})}">
+    </head>
+
+  <body>
+    <header>
+      <div
+        class="mt-20 mb-20 flex flex-col items-center justify-center gap-8 sm:flex-row sm:gap-14"
+      >
+        <img
+          th:src="${theme.config.general.avatar}"
+          class="h-40 rounded-full filter-none logo-light"
+          alt="Avatar"
+        />
+        <img
+          th:src="${theme.config.general.avatarDark != null ? theme.config.general.avatarDark : theme.config.general.avatar}"
+          class="h-40 rounded-full filter-none logo-dark"
+          alt="Avatar"
+        />
+
+        <div class="flex flex-col items-center gap-5 font-mono">
+          <div class="text-4xl" th:text="${site.title}"></div>
+
+          <div class="text-center">
+            <th:block th:each="item : ${theme?.config?.social?.socials}">
+              <a
+                class="inline-block text-black hover:text-blue-600 dark:text-white dark:hover:text-blue-300"
+                th:href="@{${item.url}}"
+              >
+                <span
+                  class="iconify-large"
+                  th:classappend="${{
+                    'bilibili': 'icon-[mingcute--bilibili-line]',
+                    'email': 'icon-[material-symbols--mail-outline-rounded]',
+                    'facebook': 'icon-[mingcute--facebook-line]',
+                    'github': 'icon-[mingcute--github-line]',
+                    'instagram': 'icon-[mdi--instagram]',
+                    'qq': 'icon-[mingcute--qq-line]',
+                    'telegram': 'icon-[ri--telegram-line]',
+                    'tiktok': 'icon-[mingcute--tiktok-line]',
+                    'twitter': 'icon-[si--twitter-line]',
+                    'youtube': 'icon-[mingcute--youtube-line]',
+                    'weibo': 'icon-[icon-park-outline--weibo]',
+                    'xiaohongshu': 'icon-[simple-icons--xiaohongshu]',
+                    'zhihu': 'icon-[ri--zhihu-fill]'
+                    }[item.name]}"
+                ></span>
+              </a>
+            </th:block>
+
+            <a
+              class="inline-block text-black hover:text-blue-600 dark:text-white dark:hover:text-blue-300"
+              th:if="${theme.config.general.rss == 1}"
+              href="/rss.xml"
+            >
+              <span class="iconify-large icon-[heroicons--rss]"></span>
+            </a>
+          </div>
+
+          <nav class="flex justify-center gap-3">
+            <th:block th:with="menu = ${menuFinder.getPrimary()}">
+              <th:block th:with="menuItems = ${menu.menuItems}">
+                <a
+                  class="index-nav"
+                  th:each="menuItem : ${menuItems}"
+                  th:href="@{${menuItem.status.href}}"
+                  th:text="${menuItem.status.displayName}"
+                  th:target="${menuItem.spec.target?.value}"
+                >
+                </a>
+              </th:block>
+            </th:block>
+
+            <a class="index-nav" href="javascript:SearchWidget.open()">
+              <span class="iconify icon-[fa-solid--search]"></span>
+            </a>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <main th:fragment="postList" class="mx-auto max-w-[768px]">
+      <div class="flex flex-col gap-5">
+        <a
+          th:each="post : ${posts.items}"
+          th:href="@{${post.status.permalink}}"
+          class="index-post-card hover:shadow-card transition duration-300 block"
+          >
+          <img
+            th:if="${!#strings.isEmpty(post.spec.cover)}"
+            th:src="${post.spec.cover}"
+            class="cover"
+            alt="文章封面"
+          />
+
+          <div class="post mx-4 my-4 flex flex-col gap-2">
+            <div
+              th:text="${post.spec.title}"
+              class="font-serif font-semibold text-lg sm:text-xl md:text-2xl"
+              style="font-size: 1.2rem"
+            ></div>
+
+            <div
+              th:if="${#strings.isEmpty(post.spec.cover)}"
+              th:text="${#strings.length(post.status.excerpt) > 150 ? #strings.substring(post.status.excerpt, 0, 150) + '...' : post.status.excerpt}"
+              class="text-neutral-600 dark:text-neutral-400 text-sm leading-relaxed"
+            ></div>
+            <div
+              th:if="${!#strings.isEmpty(post.spec.cover)}"
+              th:text="${#strings.length(post.status.excerpt) > 80 ? #strings.substring(post.status.excerpt, 0, 80) + '...' : post.status.excerpt}"
+              class="text-neutral-600 dark:text-neutral-400 text-sm leading-relaxed"
+            ></div>
+
+            <div class="flex items-center justify-between text-xs sm:text-sm">
+              <time
+                th:text="${#dates.format(post.spec.publishTime, 'yyyy-MM-dd')}"
+                class="text-neutral-600 dark:text-neutral-400"
+              ></time>
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <th:block
+        th:replace="~{module/pagination(component=${posts})}"
+      ></th:block>
+    </main>
+
+    <footer th:replace="~{module/footer}"></footer>
+  </body>
+</html>

@@ -1,0 +1,12 @@
+apiVersion: v1alpha1
+kind: AnnotationSetting
+metadata:
+  name: theme-sora-annotation-setting
+spec:
+  targetRef:
+    group: content.halo.run
+    kind: Post
+  formSchema:
+    - $formkit: "date"
+      name: "updateTime"
+      label: "更新时间"

@@ -1,0 +1,200 @@
+apiVersion: v1alpha1
+kind: Setting
+metadata:
+  name: theme-sora-setting
+spec:
+  forms:
+    - group: general
+      label: 基本设置
+      formSchema:
+        - $formkit: attachment
+          name: avatar
+          label: 头像
+        - $formkit: attachment
+          name: avatarDark
+          label: 头像（深色）
+        - $formkit: radio
+          name: rss
+          label: RSS
+          value: 1
+          options:
+            - label: 开启
+              value: 1
+            - label: 关闭
+              value: 0
+        - $formkit: radio
+          name: language
+          label: 多语言支持
+          help: 待开发，不用在乎这个
+          value: 0
+          options:
+            - label: 开启
+              value: 1
+            - label: 关闭
+              value: 0
+    - group: comment
+      label: 评论
+      formSchema:
+        - $formkit: group
+          name: Artalk
+          label: Artalk
+          help: Halo 内置评论够用时不用在乎这个
+          children:
+            - $formkit: radio
+              name: enable
+              label: 开启 Artalk 评论
+              value: 0
+              options:
+                - label: 开启
+                  value: 1
+                - label: 关闭
+                  value: 0
+            - $formkit: text
+              name: site
+              label: 站点名
+            - $formkit: text
+              name: server
+              label: Artalk 后端地址
+    - group: social
+      label: 社交媒体
+      formSchema:
+        - $formkit: repeater
+          name: socials
+          label: 社交媒体
+          value: []
+          children:
+            - $formkit: select
+              name: name
+              label: 名称
+              clearable: true
+              searchable: true
+              validation: "required"
+              options:
+                - label: BiliBili
+                  value: bilibili
+                  # value: { name: "bilibili", icon: "mingcute--bilibili-line" }
+                - label: Email
+                  value: email
+                  # value:
+                  #   {
+                  #     name: "email",
+                  #     icon: "material-symbols--mail-outline-rounded",
+                  #   }
+                - label: Facebook
+                  value: facebook
+                  # value: { name: "facebook", icon: "mingcute--facebook-fill" }
+                - label: GitHub
+                  value: github
+                  # value: { name: "github", icon: "mdi--github" }
+                - label: Instagram
+                  value: instagram
+                  # value: { name: "instagram", icon: "mdi--instagram" }
+                - label: QQ
+                  value: qq
+                  # value: { name: "qq", icon: "mingcute--qq-line" }
+                - label: Telegram
+                  value: telegram
+                  # value: { name: "telegram", icon: "ic--baseline-telegram" }
+                - label: TikTok
+                  value: tiktok
+                - label: Twitter/X
+                  value: twitter
+                  # value: { name: "twitter", icon: "si--twitter-line" }
+                - label: YouTube
+                  value: youtube
+                  # value: { name: "youtube", icon: "mingcute--youtube-line" }
+                - label: 微博
+                  value: weibo
+                  # value: { name: "weibo", icon: "ri--weibo-fill" }
+                - label: 小红书
+                  value: xiaohongshu
+                  # value: { name: "xiaohongshu", icon: "simple-icons--xiaohongshu" }
+                - label: 知乎
+                  value: zhihu
+                  # value: { name: "zhihu", icon: "ri--zhihu-fill" }
+            - $formkit: text
+              name: url
+              label: 地址
+              validation: "required"
+    - group: footer
+      label: 页脚
+      formSchema:
+        - $formkit: group
+          name: copyright
+          label: 版权
+          children:
+            - $formkit: text
+              name: time
+              label: 建站时间
+              help: "例如 2024 - 2025，默认为今年"
+            - $formkit: text
+              name: author
+              label: 版权所有者
+              help: "默认为站点标题"
+        - $formkit: group
+          name: beian
+          label: 备案
+          children:
+            - $formkit: text
+              name: icp
+              label: ICP
+            - $formkit: text
+              name: police
+              label: 公安备案号
+            - $formkit: text
+              name: policeLink
+              label: 公安备案链接
+    - group: post
+      label: 文章页
+      formSchema:
+        - $formkit: group
+          name: copyright
+          label: 版权许可
+          children:
+            - $formkit: checkbox
+              name: license
+              label: CC 许可
+              options:
+                - label: BY
+                  value: by
+                - label: NC
+                  value: nc
+                - label: SA
+                  value: sa
+                - label: ND
+                  value: nd
+            - $formkit: text
+              name: link
+              label: 许可链接
+    - group: sponsor
+      label: 赞助
+      formSchema:
+        - $formkit: radio
+          name: enable
+          label: 是否启用
+          value: 0
+          options:
+            - label: 开启
+              value: 1
+            - label: 关闭
+              value: 0
+        - $formkit: attachment
+          if: "$enable == 1"
+          name: alipay
+          label: 支付宝二维码
+        - $formkit: attachment
+          if: "$enable == 1"
+          name: wechat
+          label: 微信二维码
+        - $formkit: radio
+          if: "$enable == 1"
+          name: list
+          label: 赞助名单
+          # help: 是否显示赞助名单
+          help: 开发中，不用在乎这个
+          value: 0
+          options:
+            - label: 开启
+              value: 1
+            - label: 关闭
+              value: 0

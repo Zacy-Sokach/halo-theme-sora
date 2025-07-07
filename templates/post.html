@@ -1,0 +1,355 @@
+<!doctype html>
+<html lang="zh-CN" xmlns:th="https://www.thymeleaf.org">
+  <head
+    th:replace="~{module/head(title = ${post.spec.title} + ' | ' + ${site.title})}"
+  >
+    </head>
+
+  <body>
+    <header th:replace="~{module/header}"></header>
+
+    <article class="mx-auto w-full max-w-[600px] lg:max-w-[800px] px-4">
+      <h1
+        class="text-center font-serif text-[2rem] font-bold leading-tight my-4"
+        th:text="${post.spec.title}"
+      ></h1>
+
+      <div
+        class="mt-4 flex flex-wrap justify-center gap-3 font-mono text-sm text-gray-700 dark:text-gray-300"
+      >
+        <span class="flex items-center">
+          <span class="icon-[bx--calendar-alt] iconify-inline mr-1"></span>
+          <time
+            id="post-publish-time"
+            th:text="${#dates.format(post.spec.publishTime, 'yyyy-MM-dd')}"
+          ></time>
+        </span>
+
+        <th:block th:if="${post.metadata.annotations?.updateTime}">
+          <span
+            th:if="${post.metadata.annotations.updateTime} != ${#dates.format(post.spec.publishTime, 'yyyy-MM-dd')}"
+            class="flex items-center"
+          >
+            <span class="icon-[bx--calendar-check] iconify-inline mr-1"></span>
+            <time
+              id="post-update-time"
+              th:text="${post.metadata.annotations.updateTime}"
+            ></time>
+          </span>
+        </th:block>
+        <th:block th:unless="${post.metadata.annotations?.updateTime}">
+          <span
+            th:if="${#dates.format(post.status.lastModifyTime, 'yyyy-MM-dd')} != ${#dates.format(post.spec.publishTime, 'yyyy-MM-dd')}"
+            class="flex items-center"
+          >
+            <span class="icon-[bx--calendar-check] iconify-inline mr-1"></span>
+            <time
+              id="post-update-time"
+              th:text="${#dates.format(post.status.lastModifyTime, 'yyyy-MM-dd')}"
+            ></time>
+          </span>
+        </th:block>
+
+        <span th:if="${not #lists.isEmpty(post.categories)}" class="flex items-center">
+          <span
+            class="icon-[material-symbols--folder-outline-rounded] iconify-inline mr-1"
+          ></span>
+          <span>
+            <th:block th:each="category : ${post.categories}">
+              <a
+                th:href="${category.status.permalink}"
+                th:text="${category.spec.displayName}"
+                class="text-blue-600 hover:underline dark:text-blue-300"
+              ></a>
+            </th:block>
+          </span>
+        </span>
+
+        <span th:if="${not #lists.isEmpty(post.tags)}" class="flex items-center">
+          <span class="icon-[mdi--tag-outline] iconify-inline mr-1"></span>
+          <span>
+            <th:block th:each="tag : ${post.tags}">
+              <a
+                th:href="${tag.status.permalink}"
+                th:text="${tag.spec.displayName}"
+                class="text-blue-600 hover:underline dark:text-blue-300"
+              ></a>
+            </th:block>
+          </span>
+        </span>
+
+        <span class="flex items-center">
+          <span class="icon-[icon-park-outline--word] iconify-inline mr-1"></span>
+          <span id="post-wordcount"></span>
+        </span>
+
+        <span class="flex items-center">
+          <span class="icon-[mingcute--time-line] iconify-inline mr-1"></span>
+          <span id="post-readtime"></span>
+        </span>
+
+        <span class="flex items-center">
+          <span class="icon-[uil--chart-line] iconify-inline mr-1"></span>
+          <span th:text="${post.stats.visit}"></span>
+        </span>
+      </div>
+
+      <div class="card post-time-tips text-gray my-4 text-sm">
+        <span id="post-time-tips-span"></span>
+      </div>
+
+      <section class="relative">
+        <div id="post-content" th:utext="${post.content.content}" class="prose dark:prose-invert max-w-none"></div>
+
+        <div class="card mt-14 px-6 py-4" id="license">
+          <div id="license-icon"></div>
+
+          <div class="text-lg font-semibold" th:text="${post.spec.title}"></div>
+          <div
+            class="license-item mt-1 text-sm text-gray-600 dark:text-gray-400"
+            th:with="cleanedUrl=${#strings.endsWith(site.url, '/')
+              ? #strings.substring(site.url, 0, #strings.length(site.url)-1)
+              : site.url}"
+            th:text="${cleanedUrl + post.status.permalink}"
+          ></div>
+
+          <div class="mt-3 gap-12 sm:flex">
+            <div>
+              <div class="license-item text-gray-500 dark:text-gray-400">作者</div>
+              <span th:text="${post.owner.displayName}"></span>
+            </div>
+
+            <div>
+              <div class="license-item text-gray-500 dark:text-gray-400">发布于</div>
+              <time
+                th:text="${#dates.format(post.spec.publishTime, 'yyyy-MM-dd')}"
+              ></time>
+            </div>
+
+            <div>
+              <div class="license-item text-gray-500 dark:text-gray-400">更新于</div>
+              <time
+                th:if="${post.metadata.annotations?.updateTime}"
+                th:text="${post.metadata.annotations.updateTime}"
+              ></time>
+              <time
+                th:unless="${post.metadata.annotations?.updateTime}"
+                th:text="${#dates.format(post.status.lastModifyTime, 'yyyy-MM-dd')}"
+              ></time>
+            </div>
+
+            <div>
+              <div class="license-item text-gray-500 dark:text-gray-400">许可</div>
+              <div>
+                <a
+                  th:href="${theme.config.post.copyright.link} ?: 'https://creativecommons.org/licenses'"
+                  class="inline-flex items-center text-blue-600 hover:underline dark:text-blue-300"
+                >
+                  <span
+                    class="icon-[cib--creative-commons] iconify-inline mr-1"
+                  ></span>
+                  <th:block th:if="${theme.config.post.copyright.license}">
+                    <span
+                      th:if="${#lists.contains(theme.config.post.copyright.license, 'by')}"
+                      class="icon-[cib--creative-commons-by] iconify-inline"
+                    ></span>
+                    <span
+                      th:if="${#lists.contains(theme.config.post.copyright.license, 'nc')}"
+                      class="icon-[cib--creative-commons-nc] iconify-inline"
+                    ></span>
+                    <span
+                      th:if="${#lists.contains(theme.config.post.copyright.license, 'sa')}"
+                      class="icon-[cib--creative-commons-sa] iconify-inline"
+                    ></span>
+                    <span
+                      th:if="${#lists.contains(theme.config.post.copyright.license, 'nd')}"
+                      class="icon-[cib--creative-commons-nd] iconify-inline"
+                    ></span>
+                  </th:block>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div
+            th:if="${not #lists.isEmpty(post.categories) or not #lists.isEmpty(post.tags)}"
+            class="mt-4 flex flex-wrap justify-between gap-2 text-sm"
+          >
+            <span class="flex flex-wrap gap-2">
+              <th:block th:if="${not #lists.isEmpty(post.categories)}">
+                <a
+                  class="card-small inline-flex items-center text-blue-600 hover:bg-gray-100 dark:text-blue-300 dark:hover:bg-gray-800"
+                  th:each="category : ${post.categories}"
+                  th:href="${category.status.permalink}"
+                >
+                  <span
+                    class="icon-[material-symbols--folder-outline-rounded] iconify-inline mr-1"
+                  ></span>
+                  <span th:text="${category.spec.displayName}"></span>
+                </a>
+              </th:block>
+            </span>
+
+            <span class="flex flex-wrap gap-2">
+              <th:block th:if="${not #lists.isEmpty(post.tags)}">
+                <a
+                  class="card-small inline-flex items-center text-blue-600 hover:bg-gray-100 dark:text-blue-300 dark:hover:bg-gray-800"
+                  th:each="tag : ${post.tags}"
+                  th:href="${tag.status.permalink}"
+                >
+                  <span class="icon-[mdi--tag-outline] iconify-inline mr-1"></span>
+                  <span th:text="${tag.spec.displayName}"></span>
+                </a>
+              </th:block>
+            </span>
+          </div>
+        </div>
+
+        <div class="relative">
+          <div class="my-8 flex justify-center gap-4 text-sm">
+            <button
+              class="card-small cursor-pointer flex items-center gap-1 hover:bg-gray-100 dark:hover:bg-gray-800"
+              id="upvote-button"
+              th:data-post-id="${post.metadata.name}"
+            >
+              <span
+                class="iconify-inline icon-[flowbite--thumbs-up-solid]"
+              ></span>
+              赞
+              <span
+                id="upvote-number"
+                th:text="${post.stats?.upvote ?: 0}"
+              ></span>
+            </button>
+
+            <button
+              th:if="${theme.config.sponsor.enable}"
+              class="card-small relative cursor-pointer flex items-center gap-1 hover:bg-gray-100 dark:hover:bg-gray-800"
+              id="sponsor-button"
+            >
+              <span class="iconify-inline icon-[ph--coffee-fill]"></span>
+              赏
+            </button>
+          </div>
+
+          <div
+            th:if="${theme.config.sponsor.enable}"
+            class="card absolute bottom-full left-1/2 z-10 mb-4 hidden -translate-x-1/2 bg-white dark:bg-gray-900 text-sm"
+            id="sponsor-page"
+          >
+            <div class="flex justify-center gap-8">
+              <div th:if="${!#strings.isEmpty(theme.config.sponsor.wechat)}" class="flex flex-col items-center">
+                <img
+                  class="w-32 h-32 object-contain"
+                  alt="微信"
+                  th:src="${theme.config.sponsor.wechat}"
+                />
+                <div class="mt-1 text-center text-gray-700 dark:text-gray-300">
+                  <span
+                    class="icon-[mingcute--wechat-pay-line] iconify-inline mr-1"
+                  ></span>
+                  微信
+                </div>
+              </div>
+              <div th:if="${!#strings.isEmpty(theme.config.sponsor.alipay)}" class="flex flex-col items-center">
+                <img
+                  class="w-32 h-32 object-contain"
+                  alt="支付宝"
+                  th:src="${theme.config.sponsor.alipay}"
+                />
+                <div class="mt-1 text-center text-gray-700 dark:text-gray-300">
+                  <span
+                    class="icon-[ant-design--alipay-outlined] iconify-inline mr-1"
+                  ></span>
+                  支付宝
+                </div>
+              </div>
+            </div>
+
+            <a
+              th:if="${theme.config.sponsor.list}"
+              class="card-small hover:bg-primary mt-2 block text-center font-bold hover:text-white dark:hover:text-black transition-colors"
+              th:href="@{/about}"
+            >
+              <div>赞助名单</div>
+              <div class="mt-1 text-xs">感谢你的支持</div>
+            </a>
+          </div>
+        </div>
+
+        <aside
+          class="absolute top-0 right-[-160px] hidden h-full w-[120px] md:block"
+        >
+          <nav
+            class="sticky top-10 pl-4 font-serif text-[0.8rem]"
+            id="toc"
+          ></nav>
+        </aside>
+      </section>
+
+      <div class="mt-16" th:if="${haloCommentEnabled}">
+        <halo:comment
+          group="content.halo.run"
+          kind="Post"
+          th:attr="name=${post.metadata.name}"
+        />
+      </div>
+
+      <th:block
+        class="mt-16"
+        th:if="${theme.config.comment.Artalk.enable}"
+        th:with="server=${theme.config.comment.Artalk.server}, site=${theme.config.comment.Artalk.site}"
+      >
+        <div id="artalk"></div>
+
+        <link th:href="@{${server} + '/dist/Artalk.css'}" rel="stylesheet" />
+        <script th:src="@{${server} + '/dist/Artalk.js'}"></script>
+
+        <script>
+          Artalk.init({
+            el: "#artalk", // Artalk 容器元素
+            site: "[[${site}]]", // 网站名称
+            // pageKey: "[[${post.metadata.name}]]", // 页面唯一标识，可以根据需要启用
+            server: "[[${server}]]", // Artalk 后端地址
+          });
+        </script>
+      </th:block>
+    </article>
+
+    <aside>
+      <div class="buttons">
+        <a class="to-top" href="#"></a>
+      </div>
+    </aside>
+
+    <footer th:replace="~{module/footer}"></footer>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        // 生成目录
+        main.generateTOC();
+        // 滚动时高亮目录项
+        main.scrollHighlightTOC();
+        // 点击目录项时高亮
+        main.clickHighlightTOC();
+
+        // 计算文章字数和阅读时间
+        main.wordCountAndReadTime();
+
+        // 生成文章时效性提示
+        main.generateTimeTips();
+
+        // 为文章中的链接添加外部图标（如果适用）
+        main.addIconToLinks();
+
+        // 处理点赞功能
+        main.upvote();
+      });
+    </script>
+    <script th:if="${theme.config.sponsor.enable}">
+      document.addEventListener("DOMContentLoaded", () => {
+        main.sponsor();
+      });
+    </script>
+  </body>
+</html>
