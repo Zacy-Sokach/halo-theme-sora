@@ -5,6 +5,29 @@
 :root {
   --color-bg2: #f4f4f4;
   --size-border-radius: 0.5rem;
+
+  /* Plugin CSS Variables - Light Mode */
+  --follow-card-radius: 1rem;    /* 卡片圆角 */
+  --follow-input-radius: 0.5rem; /* 输入框圆角 */
+  --follow-button-radius: 0.5rem; /* 按钮圆角 */
+
+  /* 卡片内边距 */
+  --follow-card-padding-sm: 1.5rem;  /* 小屏幕内边距 */
+  --follow-card-padding-md: 2rem;    /* 中屏幕内边距 */
+  --follow-card-padding-lg: 3rem;    /* 大屏幕内边距 */
+  
+  /* 卡片边框 */
+  --follow-card-border: 1px solid #e2e8f0;
+
+  /* Plugin Specific Default Colors (Light Mode) */
+  --follow-title-color: inherit; /* 默认继承，或设置为亮色模式下的具体颜色 */
+  --follow-description-color: inherit; /* 默认继承 */
+  --follow-bg-color: inherit; /* 默认继承 */
+  --follow-input-bg: #f3f4f6; /* 亮色模式下输入框背景色示例 */
+  --follow-input-border: #d1d5db; /* 亮色模式下输入框边框色示例 */
+  --follow-button-bg: #3b82f6; /* 亮色模式下按钮背景色示例 */
+  --follow-button-text: #ffffff; /* 亮色模式下按钮文本颜色示例 */
+  --follow-card-shadow: 0 4px 15px -3px rgba(0, 0, 0, 0.1); /* 亮色模式下卡片阴影示例 */
 }
 
 @theme {
@@ -58,7 +81,36 @@
     --color-text: #e5e5e5;
     --color-shadow: rgba(0, 0, 0, 0.3);
     --color-border-light: #404040;
+
+    /* Plugin CSS Variables - Dark Mode */
+    --follow-title-color: #f4f4f5;
+    --follow-description-color: #a1a1aa;
+    --follow-bg-color: #18181b;
+    --follow-input-bg: #27272a;
+    --follow-input-border: #3f3f46;
+    --follow-button-bg: #3b82f6;
+    --follow-button-text: #ffffff;
+    --follow-card-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.2);
+    --follow-card-border: 1px solid rgba(255, 255, 255, 0.2);
   }
+}
+
+/* 这部分将 `color-scheme-dark` 和 `dark` 类也指向深色模式的变量 */
+/* 如果您的 HTML 中会直接使用这些类来强制深色模式，则保留此部分 */
+.color-scheme-dark,
+.dark,
+[data-color-scheme='dark'] { /* 将 follow-card 移除，因为变量已经定义在 :root 下 */
+  color-scheme: dark;
+  /* 确保这些变量引用到 :root 中已定义的深色模式变量 */
+  --follow-title-color: var(--follow-title-color);
+  --follow-description-color: var(--follow-description-color);
+  --follow-bg-color: var(--follow-bg-color);
+  --follow-input-bg: var(--follow-input-bg);
+  --follow-input-border: var(--follow-input-border);
+  --follow-button-bg: var(--follow-button-bg);
+  --follow-button-text: var(--follow-button-text);
+  --follow-card-shadow: var(--follow-card-shadow);
+  --follow-card-border: var(--follow-card-border);
 }
 
 /*基本样式*/
