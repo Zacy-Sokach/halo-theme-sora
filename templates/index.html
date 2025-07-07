@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="zh-CN" xmlns:th="https/www.thymeleaf.org">
+<html lang="zh-CN" xmlns:th="https://www.thymeleaf.org">
   <head th:replace="~{module/head(title = ${site.title})}">
     </head>
 
@@ -86,7 +86,8 @@
           th:each="post : ${posts.items}"
           th:href="@{${post.status.permalink}}"
           class="index-post-card hover:shadow-card transition duration-300 block"
-          ><img
+          >
+          <img
             th:if="${!#strings.isEmpty(post.spec.cover)}"
             th:src="${post.spec.cover}"
             class="cover"
@@ -103,18 +104,18 @@
             <div
               th:if="${#strings.isEmpty(post.spec.cover)}"
               th:text="${#strings.length(post.status.excerpt) > 150 ? #strings.substring(post.status.excerpt, 0, 150) + '...' : post.status.excerpt}"
-              class="text-gray text-sm leading-relaxed"
+              class="text-neutral-600 dark:text-neutral-400 text-sm leading-relaxed"
             ></div>
             <div
               th:if="${!#strings.isEmpty(post.spec.cover)}"
               th:text="${#strings.length(post.status.excerpt) > 80 ? #strings.substring(post.status.excerpt, 0, 80) + '...' : post.status.excerpt}"
-              class="text-gray text-sm leading-relaxed"
+              class="text-neutral-600 dark:text-neutral-400 text-sm leading-relaxed"
             ></div>
 
             <div class="flex items-center justify-between text-xs sm:text-sm">
               <time
                 th:text="${#dates.format(post.spec.publishTime, 'yyyy-MM-dd')}"
-                class="text-gray"
+                class="text-neutral-600 dark:text-neutral-400"
               ></time>
             </div>
           </div>
