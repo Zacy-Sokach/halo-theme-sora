@@ -9,12 +9,22 @@
     <header th:replace="~{module/header}"></header>
 
     <article>
+      <!-- 封面图 -->
+      <!-- <img -->
+      <!--   th:if="${!#strings.isEmpty(post.spec.cover)}" -->
+      <!--   th:src="${post.spec.cover}" -->
+      <!--   class="shadow-shadow mx-auto mb-8 h-[10rem] w-full rounded-lg object-contain" -->
+      <!-- /> -->
+
+      <!-- 标题 -->
       <div
         class="text-center font-serif text-[2rem] font-bold"
         th:text="${post.spec.title}"
       ></div>
 
+      <!-- 文章元信息 -->
       <div class="mt-4 flex flex-wrap justify-center gap-3 font-mono text-sm">
+        <!-- 发布时间 -->
         <span>
           <span class="icon-[bx--calendar-alt] iconify-inline"></span>
           <time
@@ -22,6 +32,7 @@
             th:text="${#dates.format(post.spec.publishTime, 'yyyy-MM-dd')}"
           ></time>
         </span>
+        <!-- 更新时间 -->
         <th:block th:if="${#annotations.get(post, 'updateTime')}">
           <span
             th:if="${post.metadata.annotations.updateTime} != ${#dates.format(post.spec.publishTime, 'yyyy-MM-dd')}"
@@ -44,6 +55,7 @@
             ></time>
           </span>
         </th:block>
+        <!-- 分类 -->
         <span th:if="${not #lists.isEmpty(post.categories)}">
           <span
             class="icon-[material-symbols--folder-outline-rounded] iconify-inline"
@@ -57,6 +69,7 @@
             </th:block>
           </span>
         </span>
+        <!-- 标签 -->
         <span th:if="${not #lists.isEmpty(post.tags)}">
           <span class="icon-[mdi--tag-outline] iconify-inline"></span>
           <span>
@@ -68,20 +81,29 @@
             </th:block>
           </span>
         </span>
+        <!-- 字数统计 -->
         <span>
           <span class="icon-[icon-park-outline--word] iconify-inline"></span>
           <span id="post-wordcount"></span>
         </span>
+        <!-- 预计阅读时间 -->
         <span>
           <span class="icon-[mingcute--time-line] iconify-inline"></span>
           <span id="post-readtime"></span>
         </span>
+        <!-- 浏览量 -->
         <span>
           <span class="icon-[uil--chart-line] iconify-inline"></span>
           <span th:text="${post.stats.visit}"></span>
         </span>
       </div>
 
+      <!-- 摘要 -->
+      <!-- <div class="card abstract my-4 text-sm"> -->
+      <!--   <span th:text="${post.status.excerpt}"></span> -->
+      <!-- </div> -->
+
+      <!-- 时效性提示 -->
       <div class="card post-time-tips text-gray my-4 text-sm">
         <span id="post-time-tips-span"></span>
       </div>
@@ -89,6 +111,9 @@
       <section class="relative">
         <div id="post-content" th:utext="${post.content.content}"></div>
 
+        <!-- <hr class="my-8 border-t-4 text-black opacity-10" /> -->
+
+        <!-- 版权许可协议 -->
         <div class="card mt-14 px-6 py-4" id="license">
           <div id="license-icon"></div>
 
@@ -132,6 +157,7 @@
                 <a
                   th:href="${theme.config.post.copyright.link} ?: 'https://creativecommons.org/licenses'"
                 >
+                  <!-- <img class="h-8" th:src="@{/assets/images/CC-BY-NC-SA.svg}" /> -->
                   <span
                     class="icon-[cib--creative-commons] iconify-inline"
                   ></span>
@@ -158,6 +184,7 @@
             </div>
           </div>
 
+          <!-- 末尾分类 & 标签 -->
           <div
             th:if="${not #lists.isEmpty(post.categories) or not #lists.isEmpty(post.tags)}"
             class="mt-4 flex justify-between text-sm"
@@ -192,6 +219,7 @@
           </div>
         </div>
 
+        <!-- 赞赏 -->
         <div class="relative">
           <div class="my-8 flex justify-center gap-4 text-sm">
             <button
@@ -264,9 +292,11 @@
           </div>
         </div>
 
+        <!-- 目录  -->
         <aside
           class="absolute top-0 right-[-160px] hidden h-full w-[120px] md:block"
         >
+          <!-- <div class="mt-[1rem]"># 目录</div> -->
           <nav
             class="sticky top-10 pl-4 font-serif text-[0.8rem]"
             id="toc"
@@ -307,12 +337,6 @@
       <div class="buttons">
         <a class="to-top" href="#"></a>
       </div>
-      <div class="theme-toggle-fixed">
-        <button id="theme-toggle" class="card-small" aria-label="Toggle dark mode">
-          <span id="sun-icon" class="iconify icon-[ph--sun-fill]"></span>
-          <span id="moon-icon" class="iconify icon-[ph--moon-fill] hidden"></span>
-        </button>
-      </div>
     </aside>
 
     <footer th:replace="~{module/footer}"></footer>
@@ -323,22 +347,19 @@
         main.scrollHighlightTOC();
         main.clickHighlightTOC();
 
-        // 只有当存在 #post-content 元素时才执行这些函数，避免在其他页面报错
-        const postContent = document.getElementById("post-content");
-        if (postContent) {
-          main.wordCountAndReadTime();
-          main.generateTimeTips();
-        }
+        main.wordCountAndReadTime();
+
+        main.generateTimeTips();
 
         main.addIconToLinks();
-        main.upvote();
 
-        // 仅当赞赏功能启用且赞赏按钮存在时才执行 sponsor()
-        const sponsorButton = document.getElementById('sponsor-button');
-        if (typeof main.sponsor === 'function' && sponsorButton && [[${theme.config.sponsor.enable}]]) {
-            main.sponsor();
-        }
+        main.upvote();
       });
     </script>
-    </body>
-</html>
+    <script th:if="${theme.config.sponsor.enable}">
+      document.addEventListener("DOMContentLoaded", () => {
+        main.sponsor();
+      });
+    </script>
+  </body>
+              </html>
