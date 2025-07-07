@@ -1,15 +1,54 @@
 <!doctype html>
-<html lang="zh-CN" xmlns:th="https://www.thymeleaf.org">
-  <head th:replace="~{module/head(title = ${site.title})}"> </head>
+<html lang="zh-CN" xmlns:th="https/www.thymeleaf.org">
+  <head th:replace="~{module/head(title = ${site.title})}">
+    <style>
+      /* 深色模式头像切换 */
+      @media (prefers-color-scheme: dark) {
+        .logo-light {
+          display: none !important;
+        }
+        
+        .logo-dark {
+          display: block !important;
+        }
+      }
+
+      @media (prefers-color-scheme: light) {
+        .logo-light {
+          display: block !important;
+        }
+        
+        .logo-dark {
+          display: none !important;
+        }
+      }
+
+      /* 默认状态（亮色模式） */
+      .logo-dark {
+        display: none;
+      }
+
+      .logo-light {
+        display: block;
+      }
+    </style>
+  </head>
 
   <body>
     <header>
       <div
         class="mt-20 mb-20 flex flex-col items-center justify-center gap-8 sm:flex-row sm:gap-14"
       >
+        <!-- 亮色模式头像 -->
         <img
           th:src="${theme.config.general.avatar}"
-          class="h-40 rounded-full filter-none"
+          class="h-40 rounded-full filter-none logo-light"
+          alt="Avatar"
+        />
+        <!-- 深色模式头像 -->
+        <img
+          th:src="${theme.config.general.avatarDark != null ? theme.config.general.avatarDark : theme.config.general.avatar}"
+          class="h-40 rounded-full filter-none logo-dark"
           alt="Avatar"
         />
 
@@ -40,17 +79,6 @@
                 ></span>
               </a>
             </th:block>
-            <!-- <a -->
-            <!--   class="icon" -->
-            <!--   th:href="@{${item?.type['url']}+${item?.input_value}}" -->
-            <!--   target="_blank" -->
-            <!--   th:attr="aria-label=${item?.type['aria-label']}" -->
-            <!-- > -->
-            <!--   <i -->
-            <!--     class="iconify-large" -->
-            <!--     th:attr="data-icon=${item?.type['icon']}" -->
-            <!--   ></i> -->
-            <!-- </a> -->
 
             <a
               class="text-black"
@@ -130,21 +158,6 @@
                 th:text="${#dates.format(post.spec.publishTime, 'yyyy-MM-dd')}"
                 class="text-gray"
               ></time>
-              <!-- 分类
-            <span
-              th:if="${not #lists.isEmpty(post.categories)}"
-              th:each="category : ${post.categories}"
-              class="category"
-              th:text="${category.spec.displayName}"
-            ></span> -->
-
-              <!-- Read More -->
-              <!-- <div class="h-100% flex items-center"> -->
-              <!-- <span class="textc-primary mr-0.5">Read More</span>
-            <div
-              class="i-material-symbols:arrow-right-alt-rounded textc-primary mt-0.5"
-            ></div> -->
-              <!-- </div> -->
             </div>
           </div>
         </a>
