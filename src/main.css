@@ -2,11 +2,19 @@
 @plugin "@iconify/tailwind4";
 /* @import "./HarmonyOS_Sans_SC/main.css"; */
 
-/* --- 浅色模式变量定义 --- */
 :root {
   --color-bg2: #f4f4f4;
   --size-border-radius: 0.5rem;
+}
 
+@theme {
+  --font-serif: "Noto Serif CJK", ui-serif, serif;
+  /* 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji' */
+  /* --font-semi-serif: "LXGW WenKai"; */
+  --font-sans-serif: "HarmonyOS Sans SC", ui-sans-serif, sans-serif;
+  --font-mono: "Maple Mono NF CN", ui-monospace, monospace;
+
+  /* 亮色模式颜色 */
   --color-primary-50: #fff0fc;
   --color-primary-100: #ffe3fc;
   --color-primary-200: #ffc7f9;
@@ -22,120 +30,41 @@
   --color-primary: var(--color-primary-900);
   --color-primary-soft: rgb(from var(--color-primary) r g b / 0.15);
 
-  /* **修正：为浅色模式定义具体的灰度变量名** */
-  --color-gray-light: #e7e9ef;
-  --color-gray: #6b7280;
-  --color-gray-dark: #374151;
+  --color-gray-light: var(--color-gray-100);
+  --color-gray: var(--color-neutral-600);
+  --color-gray-dark: var(--color-neutral-700);
 
-  --color-text: #383a42;
   --color-bg: #f9f9f9;
+  --color-bg2: #f4f4f4;
+  --color-text: #222;
   --color-shadow: rgba(0, 0, 0, 0.1);
   --color-border-light: #e7e9ef;
-  --color-heading-border: #f2f3f4;
-  --color-list-border: #dfe0e1;
-  --color-code-bg: var(--color-bg2);
-  --color-table-border: #d9dfe4;
-  --color-scrollbar-thumb: #9ca3af;
 
   --breakpoint-sm: 480px;
 }
 
-/* --- 深色模式变量定义 (这些变量会通过 html.dark 规则被应用) --- */
-:root {
-  --dark-color-bg2: #282828;
-  --dark-color-primary-50: #3f0028;
-  --dark-color-primary-100: #5d003c;
-  --dark-color-primary-200: #82045b;
-  --dark-color-primary-300: #b5007c;
-  --dark-color-primary-400: #dc0097;
-  --dark-color-primary-500: #fc06ba;
-  --dark-color-primary-600: #ff2ad6;
-  --dark-color-primary-700: #ff5ae7;
-  --dark-color-primary-800: #ff99f2;
-  --dark-color-primary-900: #ffc7f9;
-  --dark-color-primary-950: #ffe3fc;
-
-  /* **修正：为深色模式定义具体的灰度变量名，而非直接覆盖** */
-  --dark-color-gray-light: #333; /* 对应浅色的 --color-gray-light */
-  --dark-color-gray: #b0b0b0;    /* 对应浅色的 --color-gray */
-  --dark-color-gray-dark: #e0e0e0; /* 对应浅色的 --color-gray-dark */
-
-  --dark-color-text: #e0e0e0;
-  --dark-color-bg: #1e1e1e;
-  --dark-color-shadow: rgba(255, 255, 255, 0.1);
-  --dark-color-border-light: #333;
-  --dark-color-heading-border: #333;
-  --dark-color-list-border: #555;
-  --dark-color-code-bg: var(--dark-color-bg2);
-  --dark-color-table-border: #555;
-  --dark-color-scrollbar-thumb: #6b7280;
-}
-
----
-
-/* --- 深色模式激活时的样式：当 <html> 标签有 'dark' 类时生效 --- */
-html.dark {
-  /* 重新定义所有深色模式下的 CSS 变量 */
+/* 深色模式颜色 */
+@media (prefers-color-scheme: dark) {
   :root {
-    --color-bg2: var(--dark-color-bg2);
-    --color-primary-50: var(--dark-color-primary-50);
-    --color-primary-100: var(--dark-color-primary-100);
-    --color-primary-200: var(--dark-color-primary-200);
-    --color-primary-300: var(--dark-color-primary-300);
-    --color-primary-400: var(--dark-color-primary-400);
-    --color-primary-500: var(--dark-color-primary-500);
-    --color-primary-600: var(--dark-color-primary-600);
-    --color-primary-700: var(--dark-color-primary-700);
-    --color-primary-800: var(--dark-color-primary-800);
-    --color-primary-900: var(--dark-color-primary-900);
-    --color-primary-950: var(--dark-color-primary-950);
-
-    --color-primary: var(--dark-color-primary-700);
-    --color-primary-soft: rgb(from var(--color-primary) r g b / 0.15);
-
-    /* **修正：这里引用深色模式的灰度变量** */
-    --color-gray-light: var(--dark-color-gray-light);
-    --color-gray: var(--dark-color-gray);
-    --color-gray-dark: var(--dark-color-gray-dark);
-
-    --color-text: var(--dark-color-text);
-    --color-bg: var(--dark-color-bg);
-    --color-shadow: var(--dark-color-shadow);
-    --color-border-light: var(--dark-color-border-light);
-    --color-heading-border: var(--dark-color-heading-border);
-    --color-list-border: var(--dark-color-list-border);
-    --color-code-bg: var(--dark-color-code-bg);
-    --color-table-border: var(--dark-color-table-border);
-    --color-scrollbar-thumb: var(--dark-color-scrollbar-thumb);
+    --color-primary: var(--color-primary-300);
+    --color-primary-soft: rgb(from var(--color-primary) r g b / 0.2);
+    
+    --color-gray-light: var(--color-gray-700);
+    --color-gray: var(--color-neutral-400);
+    --color-gray-dark: var(--color-neutral-300);
+    
+    --color-bg: #1a1a1a;
+    --color-bg2: #2a2a2a;
+    --color-text: #e5e5e5;
+    --color-shadow: rgba(0, 0, 0, 0.3);
+    --color-border-light: #404040;
   }
-
-  /* 针对深色模式下特定元素的样式调整 */
-  .index-post-card > .cover {
-    mask: linear-gradient(90deg, transparent, #000 50%);
-  }
-
-  #license-icon {
-    content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Cg fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='1'%3E%3Cpath d='M.5 7a6.5 6.5 0 1 0 13 0a6.5 6.5 0 1 0-13 0'/%3E%3Cpath d='M6.046 5.6a1.05 1.05 0 0 0-.99-.7h-.7c-.58 0-1.05.47-1.05 1.05v2.1c0 .58.47 1.05 1.05 1.05h.7c.457 0 .846-.292.99-.7m4.648-2.8a1.05 1.05 0 0 0-.99-.7h-.7c-.58 0-1.05.47-1.05 1.05v2.1c0 .58.47 1.05 1.05 1.05h.7c.457 0 .846-.292.99-.7'/%3E%3C/g%3E%3C/svg%3E");
-  }
-
-  .post-time-tips {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23ffffff1a' d='M12 21q-1.875 0-3.512-.712t-2.85-1.925t-1.925-2.85T3 12t.713-3.512t1.924-2.85t2.85-1.925T12 3q2.05 0 3.888.875T19 6.35V5q0-.425.288-.712T20 4t.713.288T21 5v4q0 .425-.288.713T20 10h-4q-.425 0-.712-.288T15 9t.288-.712T16 8h1.75q-1.025-1.4-2.525-2.2T12 5Q9.075 5 7.038 7.038T5 12t2.038 4.963T12 19q2.375 0 4.25-1.425t2.475-3.675q.125-.4.45-.6t.725-.15q.425.05.675.362t.15.688q-.725 2.975-3.15 4.888T12 21m1-9.4l2.5 2.5q.275.275.275.7t-.275.7t-.7.275t-.7-.275l-2.8-2.8q-.15-.15-.225-.337T11 11.975V8q0-.425.288-.712T12 7t.713.288T13 8z'/%3E%3C/svg%3E");
-  }
-}
-
----
-
-@theme {
-  --font-serif: "Noto Serif CJK", ui-serif, serif;
-  --font-sans-serif: "HarmonyOS Sans SC", ui-sans-serif, sans-serif;
-  --font-mono: "Maple Mono NF CN", ui-monospace, monospace;
-
-  --breakpoint-sm: 480px;
 }
 
 /*基本样式*/
 
 @layer base {
+  /* 全局默认设置 */
   html,
   body {
     margin: 0;
@@ -145,6 +74,7 @@ html.dark {
   }
 
   html {
+    /* Enable smooth scrolling */
     scroll-behavior: smooth;
   }
 
@@ -153,22 +83,24 @@ html.dark {
     color: var(--color-text);
     background-color: var(--color-bg);
     padding: 0 32px;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 
   article {
     @apply mx-auto w-full max-w-[600px] lg:max-w-[800px];
   }
 
+  /* 标题 */
   h1,
   h2,
   h3,
   h4 {
     margin: 1rem 0;
-    color: var(--color-primary);
+    color: var(--color-text);
     font-weight: bold;
     font-family: var(--font-serif);
     padding-bottom: 8px;
-    border-bottom: 1px solid var(--color-heading-border);
+    border-bottom: 1px solid var(--color-border-light);
   }
 
   h1 {
@@ -187,12 +119,15 @@ html.dark {
     font-size: 1.2rem;
   }
 
+  /* 段落 */
   p {
     font-size: 1rem;
     margin: 1rem 0;
     line-height: 1.8;
+    color: var(--color-text);
   }
 
+  /* 列表 */
   ul,
   ol {
     margin: 1rem 0;
@@ -211,6 +146,7 @@ html.dark {
     margin: 1rem 0;
     padding-left: 8px;
     position: relative;
+    color: var(--color-text);
   }
 
   li::before {
@@ -219,9 +155,10 @@ html.dark {
     left: -12px;
     height: calc(100% - 30px);
     content: "";
-    border-left: 2px solid var(--color-list-border);
+    border-left: 2px solid var(--color-border-light);
   }
 
+  /* 链接 */
   #post-content a {
     color: var(--color-primary);
     text-decoration: none;
@@ -242,21 +179,24 @@ html.dark {
     color: var(--color-primary);
   }
 
+  /* 引用 */
   blockquote {
-    color: var(--color-gray-dark); /* 使用灰度变量 */
-    background-color: var(--color-bg); /* 使用背景色变量 */
+    color: var(--color-gray-dark);
+    background-color: var(--color-bg2);
     border-left: 4px solid var(--color-primary);
     border-radius: 0 8px 8px 0;
     margin: 1rem 0;
     padding: 0.1rem 0.5rem 0.1rem 1.2rem;
   }
 
+  /* 代码块 */
   code {
     font-size: 85%;
     padding: 2px 4px;
     border-radius: 6px;
     font-family: var(--font-mono);
-    background-color: var(--color-code-bg);
+    background-color: var(--color-bg2);
+    color: var(--color-text);
   }
 
   pre {
@@ -267,12 +207,14 @@ html.dark {
     color: var(--color-text);
   }
 
+  /* 图片 */
   #post-content img {
     border-radius: 8px;
     margin: 0.5rem 0;
     filter: drop-shadow(var(--color-shadow) 0px 6px 6px);
   }
 
+  /*表格*/
   table {
     width: 100%;
     display: table;
@@ -281,19 +223,23 @@ html.dark {
 
   table tr th,
   table tr td {
-    border: 1px solid var(--color-table-border);
+    border: 1px solid var(--color-border-light);
     padding: 5px 10px;
     text-align: justify;
+    color: var(--color-text);
   }
 
   table tr th {
     font-weight: bold;
+    background-color: var(--color-bg2);
   }
 
+  /* 按钮 */
   button.active {
     opacity: 0.5;
   }
 
+  /*滚动条*/
   ::-webkit-scrollbar {
     width: 0.5rem;
     height: 0.5rem;
@@ -301,26 +247,37 @@ html.dark {
 
   ::-webkit-scrollbar-thumb {
     border-radius: 8px;
-    background-color: var(--color-scrollbar-thumb);
+    background-color: var(--color-gray-300);
+  }
+  
+  /* 深色模式滚动条 */
+  @media (prefers-color-scheme: dark) {
+    ::-webkit-scrollbar-thumb {
+      background-color: var(--color-gray-600);
+    }
   }
 }
 
 @layer components {
+  /* 卡片 */
   .card {
     border-width: 1px;
     border-radius: var(--size-border-radius);
-    border-color: var(--color-gray-light); /* 使用灰度变量 */
+    border-color: var(--color-border-light);
     padding: 1rem;
     background-color: var(--color-bg);
     box-shadow: 0 0px 8px var(--color-shadow);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
   }
 
   .card-small {
     border-width: 1px;
     border-radius: var(--size-border-radius);
-    border-color: var(--color-gray-light); /* 使用灰度变量 */
+    border-color: var(--color-border-light);
     padding: 0.4rem 0.5rem;
     box-shadow: 0 0 4px var(--color-shadow);
+    background-color: var(--color-bg);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
   }
 }
 
@@ -353,14 +310,12 @@ html.dark {
 
 .to-top::before {
   width: 1.5em;
-  color: var(--color-primary); /* 如果SVG需要继承颜色，这会有用 */
-  fill: var(--color-primary);  /* 如果SVG需要继承填充色，这会有用 */
+  color: var(--color-primary);
+  fill: var(--color-primary);
   display: inline-block;
   height: 1.5rem;
   vertical-align: -0.125em;
-  /* **修正：这里使用一个在深色模式下颜色会改变的SVG** */
-  /* 确保这个SVG内部的fill或stroke属性是'currentColor'，这样它会继承父元素的color */
-  content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='currentColor' d='M12.707 3.636a1 1 0 0 0-1.414 0L5.636 9.293a1 1 0 1 0 1.414 1.414L11 6.757V20a1 1 0 1 0 2 0V6.757l3.95 3.95a1 1 0 0 0 1.414-1.414z'/%3E%3C/svg%3E");
+  content: url("data:image/svg+xml,%3Csvg xmlns='http/www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none'%3E%3Cpath d='M24 0v24H0V0zM12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035q-.016-.005-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093q.019.005.029-.008l.004-.014l-.034-.614q-.005-.019-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z'/%3E%3Cpath fill='%23953232' d='M12.707 3.636a1 1 0 0 0-1.414 0L5.636 9.293a1 1 0 1 0 1.414 1.414L11 6.757V20a1 1 0 1 0 2 0V6.757l3.95 3.95a1 1 0 0 0 1.414-1.414z'/%3E%3C/g%3E%3C/svg%3E");
 }
 
 /*导航栏*/
@@ -378,9 +333,11 @@ html.dark {
   background-color: var(--color-bg2);
   border-radius: 8px;
   text-decoration: none;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* icon  */
+/* iconify 样式 */
 .iconify-inline {
   vertical-align: -0.125rem;
 }
@@ -449,19 +406,29 @@ html.dark {
   border-radius: 0 0.8em 0.8em 0;
 }
 
+/* 深色模式下的遮罩调整 */
+@media (prefers-color-scheme: dark) {
+  .index-post-card > .cover {
+    mask: linear-gradient(90deg, transparent, var(--color-bg) 50%);
+  }
+}
+
 /* 目录 */
 #toc a {
   color: var(--color-text);
   opacity: 0.6;
   transition: all 200ms ease-in-out;
 }
+
 #toc a:hover {
   opacity: 0.9;
 }
+
 #toc .active > a {
   opacity: 1;
   font-weight: 600;
 }
+
 #toc .active {
   border-left-color: var(--color-primary);
   border-start-end-radius: 0.5rem;
@@ -470,17 +437,21 @@ html.dark {
 
 #toc > div {
   padding: 0.2rem 0;
-  border-left: 3px solid var(--color-border-light); /* 使用边框颜色变量 */
+  border-left: 3px solid var(--color-border-light);
 }
+
 #toc .toc-item-level-1 {
   padding-left: 10px;
 }
+
 #toc .toc-item-level-2 {
   padding-left: calc(10px + 0.6rem);
 }
+
 #toc .toc-item-level-3 {
   padding-left: calc(10px + 1.2rem);
 }
+
 #toc .toc-item-level-4 {
   padding-left: calc(10px + 1.8rem);
 }
@@ -498,40 +469,32 @@ html.dark {
   right: -2rem;
   transform: translateY(-50%);
   height: 12rem;
-  /* **保持原有的content，但确保其SVG内部颜色是currentColor** */
-  content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Cg fill='none' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='1'%3E%3Cpath d='M.5 7a6.5 6.5 0 1 0 13 0a6.5 6.5 0 1 0-13 0'/%3E%3Cpath d='M6.046 5.6a1.05 1.05 0 0 0-.99-.7h-.7c-.58 0-1.05.47-1.05 1.05v2.1c0 .58.47 1.05 1.05 1.05h.7c.457 0 .846-.292.99-.7m4.648-2.8a1.05 1.05 0 0 0-.99-.7h-.7c-.58 0-1.05.47-1.05 1.05v2.1c0 .58.47 1.05 1.05 1.05h.7c.457 0 .846-.292.99-.7'/%3E%3C/g%3E%3C/svg%3E");
+  content: url("data:image/svg+xml,%3Csvg xmlns='http/www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Cg fill='none' stroke='%23000' stroke-linecap='round' stroke-linejoin='round' stroke-width='1'%3E%3Cpath d='M.5 7a6.5 6.5 0 1 0 13 0a6.5 6.5 0 1 0-13 0'/%3E%3Cpath d='M6.046 5.6a1.05 1.05 0 0 0-.99-.7h-.7c-.58 0-1.05.47-1.05 1.05v2.1c0 .58.47 1.05 1.05 1.05h.7c.457 0 .846-.292.99-.7m4.648-2.8a1.05 1.05 0 0 0-.99-.7h-.7c-.58 0-1.05.47-1.05 1.05v2.1c0 .58.47 1.05 1.05 1.05h.7c.457 0 .846-.292.99-.7'/%3E%3C/g%3E%3C/svg%3E");
   opacity: 0.1;
   z-index: -1;
 }
 
+/* 深色模式下的图标调整 */
+@media (prefers-color-scheme: dark) {
+  #license-icon {
+    content: url("data:image/svg+xml,%3Csvg xmlns='http/www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Cg fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='1'%3E%3Cpath d='M.5 7a6.5 6.5 0 1 0 13 0a6.5 6.5 0 1 0-13 0'/%3E%3Cpath d='M6.046 5.6a1.05 1.05 0 0 0-.99-.7h-.7c-.58 0-1.05.47-1.05 1.05v2.1c0 .58.47 1.05 1.05 1.05h.7c.457 0 .846-.292.99-.7m4.648-2.8a1.05 1.05 0 0 0-.99-.7h-.7c-.58 0-1.05.47-1.05 1.05v2.1c0 .58.47 1.05 1.05 1.05h.7c.457 0 .846-.292.99-.7'/%3E%3C/g%3E%3C/svg%3E");
+  }
+}
+
 #license .license-item {
-  @apply text-sm;
-  color: var(--color-gray); /* 使用灰度变量 */
+  @apply text-gray text-sm;
 }
 
 /* 时效性提示 */
 .post-time-tips {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='currentColor' d='M12 21q-1.875 0-3.512-.712t-2.85-1.925t-1.925-2.85T3 12t.713-3.512t1.924-2.85t2.85-1.925T12 3q2.05 0 3.888.875T19 6.35V5q0-.425.288-.712T20 4t.713.288T21 5v4q0 .425-.288.713T20 10h-4q-.425 0-.712-.288T15 9t.288-.712T16 8h1.75q-1.025-1.4-2.525-2.2T12 5Q9.075 5 7.038 7.038T5 12t2.038 4.963T12 19q2.375 0 4.25-1.425t2.475-3.675q.125-.4.45-.6t.725-.15q.425.05.675.362t.15.688q-.725 2.975-3.15 4.888T12 21m1-9.4l2.5 2.5q.275.275.275.7t-.275.7t-.7.275t-.7-.275l-2.8-2.8q-.15-.15-.225-.337T11 11.975V8q0-.425.288-.712T12 7t.713.288T13 8z'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http/www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%230000001a' d='M12 21q-1.875 0-3.512-.712t-2.85-1.925t-1.925-2.85T3 12t.713-3.512t1.924-2.85t2.85-1.925T12 3q2.05 0 3.888.875T19 6.35V5q0-.425.288-.712T20 4t.713.288T21 5v4q0 .425-.288.713T20 10h-4q-.425 0-.712-.288T15 9t.288-.712T16 8h1.75q-1.025-1.4-2.525-2.2T12 5Q9.075 5 7.038 7.038T5 12t2.038 4.963T12 19q2.375 0 4.25-1.425t2.475-3.675q.125-.4.45-.6t.725-.15q.425.05.675.362t.15.688q-.725 2.975-3.15 4.888T12 21m1-9.4l2.5 2.5q.275.275.275.7t-.275.7t-.7.275t-.7-.275l-2.8-2.8q-.15-.15-.225-.337T11 11.975V8q0-.425.288-.712T12 7t.713.288T13 8z'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right;
-  /* **添加背景尺寸，避免SVG过大或过小** */
-  background-size: 1.2em auto; /* 例如，调整大小 */
-  color: var(--color-gray); /* 确保文本颜色也使用变量 */
 }
 
-/* --- 主题切换按钮的固定定位样式 --- */
-.theme-toggle-fixed {
-  right: 1em;
-  bottom: 2em;
-  z-index: 1;
-  position: fixed;
-}
-
-.theme-toggle-fixed button {
-  padding: 0.5em;
-  display: block;
-  cursor: pointer;
-  background: var(--color-bg);
-  border-radius: 0.25em;
-  border: 1px solid var(--color-border-light);
+/* 深色模式下的时效性提示图标 */
+@media (prefers-color-scheme: dark) {
+  .post-time-tips {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http/www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23ffffff1a' d='M12 21q-1.875 0-3.512-.712t-2.85-1.925t-1.925-2.85T3 12t.713-3.512t1.924-2.85t2.85-1.925T12 3q2.05 0 3.888.875T19 6.35V5q0-.425.288-.712T20 4t.713.288T21 5v4q0 .425-.288.713T20 10h-4q-.425 0-.712-.288T15 9t.288-.712T16 8h1.75q-1.025-1.4-2.525-2.2T12 5Q9.075 5 7.038 7.038T5 12t2.038 4.963T12 19q2.375 0 4.25-1.425t2.475-3.675q.125-.4.45-.6t.725-.15q.425.05.675.362t.15.688q-.725 2.975-3.15 4.888T12 21m1-9.4l2.5 2.5q.275.275.275.7t-.275.7t-.7.275t-.7-.275l-2.8-2.8q-.15-.15-.225-.337T11 11.975V8q0-.425.288-.712T12 7t.713.288T13 8z'/%3E%3C/svg%3E");
+  }
 }
