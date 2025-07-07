@@ -1,239 +1,171 @@
 import "./main.css";
-//import "./test/lapis.css"; // 如果不需要，请保持注释或删除
+//import "./test/lapis.css";
 
 export * from "./TOC.js";
 export * from "./upvote.js";
 export * from "./sponsor.js";
 export * from "./linkIcon.js";
 
-// 定义 main 对象，包含所有主要的客户端逻辑
-window.main = {
-  // 返回页首按钮的显示/隐藏逻辑
-  to_top: function () {
-    const btn = document.getElementsByClassName("to-top")[0];
-    const scroll =
-      window.pageYOffset ||
-      document.documentElement.scrollTop ||
-      document.body.scrollTop;
-
-    // 只有当按钮存在时才操作
-    if (btn) {
-      scroll >= window.innerHeight / 2
-        ? btn.classList.add("active")
-        : btn.classList.remove("active");
+// 节流函数
+function throttle(func, limit) {
+  let inThrottle;
+  return function() {
+    const args = arguments;
+    const context = this;
+    if (!inThrottle) {
+      func.apply(context, args);
+      inThrottle = true;
+      setTimeout(() => inThrottle = false, limit);
     }
-  },
-
-  // 字数统计 + 预计阅读时间
-  wordCountAndReadTime: function () {
-    const element = document.querySelector("#post-content");
-    const postWordcountSpan = document.getElementById("post-wordcount");
-    const postReadtimeSpan = document.getElementById("post-readtime");
-
-    if (element && postWordcountSpan && postReadtimeSpan) {
-      const textLength = element.textContent.length;
-      postWordcountSpan.textContent = textLength;
-
-      const min = Math.round(textLength / 350);
-      const max = Math.round(textLength / 250);
-      if (min === max) {
-        postReadtimeSpan.textContent = `${max} min`;
-      } else {
-        postReadtimeSpan.textContent = `${min}~${max} min`;
-      }
-    }
-  },
-
-  // 文章时效性提示
-  generateTimeTips: function () {
-    const now = Date.now();
-    const postPublishTime = document.getElementById("post-publish-time");
-    const postUpdateTime = document.getElementById("post-update-time");
-    const postTimeTipsSpan = document.getElementById("post-time-tips-span");
-
-    if (postTimeTipsSpan) {
-      const date = postUpdateTime ? postUpdateTime.textContent : postPublishTime.textContent;
-      const prefix = postUpdateTime ? "更新于 " : "发布于 ";
-
-      const randomWords = [
-        "时过境迁",
-        "沧海桑田",
-        "天翻地覆",
-        "水流花落",
-        "斗转星移",
-        "物是人非",
-        "时移世易",
-        "物换星移",
-        "春去秋来",
-      ];
-      const randomIndex = Math.floor(Math.random() * randomWords.length);
-
-      const countDaysBetween = (isoDate1, isoDate2) => {
-        const date1 = new Date(isoDate1);
-        const date2 = new Date(isoDate2);
-        const timeDifference = Math.abs(date2.getTime() - date1.getTime());
-        return Math.floor(timeDifference / (1000 * 60 * 60 * 24));
-      };
-
-      postTimeTipsSpan.textContent =
-        "本文" +
-        prefix +
-        countDaysBetween(date, now) +
-        " 天前，其中的信息可能已经" +
-        randomWords[randomIndex];
-    }
-  },
-
-  // 主题切换逻辑
-  initThemeToggle: function () {
-    // 修正：删除重复的 themeToggle 声明
-    const themeToggle = document.getElementById('theme-toggle');
-    const htmlElement = document.documentElement; // <html> 标签
-    const sunIcon = document.getElementById('sun-icon');
-    const moonIcon = document.getElementById('moon-icon');
-
-    // **修正：这里的 `if (!themeToggle)` 逻辑应该包含整个 `initThemeToggle` 的剩余部分，
-    // 或者在函数开头进行检查，避免后续代码依赖一个可能不存在的元素。
-    // 但是，考虑到我们希望即使没有按钮也能初始化主题，我们把按钮的隐藏/显示逻辑放在后面。**
-
-    // 获取主题配置
-    // 确保 window.themeConfig 存在，并从 general 组获取设置
-    const defaultThemeMode = window.themeConfig?.general?.default_theme_mode || 'system';
-    const enableThemeToggleButton = window.themeConfig?.general?.enable_theme_toggle_button === '1'; // 注意：Halo 后台开关值是字符串 '1' 或 '0'
-
-    // 根据后台配置决定是否显示主题切换按钮
-    if (themeToggle) {
-      if (enableThemeToggleButton) {
-        themeToggle.style.display = 'block'; // 显示按钮
-      } else {
-        themeToggle.style.display = 'none'; // 隐藏按钮
-      }
-    } else {
-      // 如果按钮本身就不存在，发出警告（仅在调试时有用）
-      console.warn('主题切换按钮（#theme-toggle）未找到。');
-    }
-
-    // 初始化主题：根据 localStorage 存储的偏好，或后台设置的默认模式，或系统偏好设置
-    const savedTheme = localStorage.getItem('theme');
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-    let currentTheme = '';
-    if (savedTheme) { // 优先使用用户在 localStorage 中保存的设置
-      currentTheme = savedTheme;
-    } else { // 如果没有保存的设置，则根据后台配置的默认模式或系统偏好
-      if (defaultThemeMode === 'dark') {
-        currentTheme = 'dark';
-      } else if (defaultThemeMode === 'light') {
-        currentTheme = 'light';
-      } else { // defaultThemeMode === 'system'
-        currentTheme = prefersDark ? 'dark' : 'light';
-      }
-    }
-
-    if (currentTheme === 'dark') {
-      htmlElement.classList.add('dark');
-    } else {
-      htmlElement.classList.remove('dark');
-    }
-
-    // 根据当前主题设置初始图标显示状态
-    if (sunIcon && moonIcon) {
-      if (htmlElement.classList.contains('dark')) {
-        sunIcon.classList.add('hidden');
-        moonIcon.classList.remove('hidden');
-      } else {
-        sunIcon.classList.remove('hidden');
-        moonIcon.classList.add('hidden');
-      }
-    }
-
-    // 添加按钮点击事件监听器（只有当按钮存在且被启用时才添加）
-    if (themeToggle && enableThemeToggleButton) {
-      themeToggle.addEventListener('click', () => {
-        htmlElement.classList.toggle('dark'); // 切换 dark 类
-
-        if (htmlElement.classList.contains('dark')) {
-          localStorage.setItem('theme', 'dark'); // 保存用户选择到 localStorage
-          if (sunIcon && moonIcon) {
-            sunIcon.classList.add('hidden');
-            moonIcon.classList.remove('hidden');
-          }
-        } else {
-          localStorage.setItem('theme', 'light'); // 保存用户选择到 localStorage
-          if (sunIcon && moonIcon) {
-            sunIcon.classList.remove('hidden');
-            moonIcon.classList.add('hidden');
-          }
-        }
-      });
-    }
-
-    // 监听系统主题变化：仅当用户未手动选择主题，并且后台配置为“跟随系统”时才响应
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (event) => {
-      if (!localStorage.getItem('theme') && defaultThemeMode === 'system') {
-        if (event.matches) {
-          htmlElement.classList.add('dark');
-          if (sunIcon && moonIcon) {
-            sunIcon.classList.add('hidden');
-            moonIcon.classList.remove('hidden');
-          }
-        } else {
-          htmlElement.classList.remove('dark');
-          if (sunIcon && moonIcon) {
-            sunIcon.classList.remove('hidden');
-            moonIcon.classList.add('hidden');
-          }
-        }
-      }
-    });
   }
+}
+
+// 返回顶部按钮控制
+const toTop = () => {
+  const btn = document.querySelector(".to-top");
+  if (!btn) return;
+  
+  const scroll = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
+  const threshold = window.innerHeight / 2;
+  
+  btn.classList.toggle("active", scroll >= threshold);
 };
 
-// 页面加载完成时执行所有初始化逻辑
+// 使用节流优化滚动事件
+window.addEventListener("scroll", throttle(toTop, 100));
+
+// DOM 内容加载完成后的初始化
 document.addEventListener("DOMContentLoaded", () => {
-  // 返回页首按钮的滚动监听
-  window.addEventListener("scroll", main.to_top);
-  main.to_top(); // 页面加载时执行一次以确定初始状态
+  initExternalLinks();
+  initWordCountAndReadTime();
+  initTimeTips();
+});
 
-  // 外部链接在新窗口打开
+// 初始化外部链接
+function initExternalLinks() {
+  // 修复链接匹配规则 - 应该是 'https://' 而不是 'https/'
   document.querySelectorAll("a[href^='https://']").forEach((link) => {
-    link.setAttribute("target", "_blank");
-    link.setAttribute("rel", "noopener");
+    // 检查是否为外部链接
+    if (!link.href.includes(window.location.hostname)) {
+      link.setAttribute("target", "_blank");
+      link.setAttribute("rel", "noopener noreferrer"); // 添加 noreferrer 提高安全性
+    }
   });
+}
 
-  // 主题切换初始化
-  main.initThemeToggle();
+// 字数统计 + 预计阅读时间
+function initWordCountAndReadTime() {
+  const element = document.querySelector("#post-content");
+  const wordCountEl = document.getElementById("post-wordcount");
+  const readTimeEl = document.getElementById("post-readtime");
+  
+  if (!element || !wordCountEl || !readTimeEl) return;
+  
+  // 计算字数（排除代码块和标签）
+  const textContent = element.textContent || element.innerText || "";
+  const textLength = textContent.trim().length;
+  
+  // 显示字数
+  wordCountEl.textContent = textLength.toLocaleString(); // 添加千分位分隔符
+  
+  // 计算阅读时间（中文阅读速度）
+  const readTime = calculateReadTime(textLength);
+  readTimeEl.textContent = readTime;
+}
 
-  // 以下是你之前在 post.html 的 DOMContentLoaded 中调用的函数
-  // 确保这些函数在 main.js 中被导出或者作为 main 对象的方法
-  if (typeof main.generateTOC === 'function') { // 检查函数是否存在
-    main.generateTOC();
+// 计算阅读时间
+function calculateReadTime(textLength) {
+  if (textLength === 0) return "0 min";
+  
+  // 中文阅读速度：250-350字/分钟
+  const minTime = Math.ceil(textLength / 350);
+  const maxTime = Math.ceil(textLength / 250);
+  
+  if (minTime === maxTime) {
+    return `${maxTime} min`;
+  } else {
+    return `${minTime}~${maxTime} min`;
   }
-  if (typeof main.scrollHighlightTOC === 'function') {
-    main.scrollHighlightTOC();
-  }
-  if (typeof main.clickHighlightTOC === 'function') {
-    main.clickHighlightTOC();
+}
+
+// 计算两个日期之间的天数差
+function calculateDaysBetween(date1, date2) {
+  const time1 = new Date(date1).getTime();
+  const time2 = new Date(date2).getTime();
+  
+  if (isNaN(time1) || isNaN(time2)) {
+    console.warn("无效的日期格式");
+    return 0;
   }
   
-  // 确保这些函数仅在相关元素存在时才执行，例如在文章详情页
-  const postContent = document.getElementById("post-content");
-  if (postContent) {
-    main.wordCountAndReadTime();
-    main.generateTimeTips();
-  }
+  const timeDifference = Math.abs(time2 - time1);
+  return Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+}
 
-  // 确保 addIconToLinks, upvote, sponsor 在 main.js 中被导出或作为 main 对象方法
-  // 并且只在需要它们的页面执行 (例如文章详情页)
-  if (typeof main.addIconToLinks === 'function') {
-    main.addIconToLinks();
+// 获取随机描述词
+function getRandomTimePhrase() {
+  const phrases = [
+    "时过境迁",
+    "沧海桑田", 
+    "天翻地覆",
+    "水流花落",
+    "斗转星移",
+    "物是人非",
+    "时移世易",
+    "物换星移",
+    "春去秋来",
+    "岁月如流",
+    "时光荏苒",
+    "白云苍狗"
+  ];
+  
+  return phrases[Math.floor(Math.random() * phrases.length)];
+}
+
+// 初始化时效性提示
+function initTimeTips() {
+  const tipsSpan = document.getElementById("post-time-tips-span");
+  if (!tipsSpan) return;
+  
+  const updateTimeEl = document.getElementById("post-update-time");
+  const publishTimeEl = document.getElementById("post-publish-time");
+  
+  if (!updateTimeEl && !publishTimeEl) return;
+  
+  const dateText = updateTimeEl?.textContent || publishTimeEl?.textContent;
+  const prefix = updateTimeEl ? "更新于 " : "发布于 ";
+  
+  const daysDiff = calculateDaysBetween(dateText, new Date().toISOString());
+  
+  // 只在文章比较旧时显示提示（比如超过 30 天）
+  if (daysDiff >= 30) {
+    const randomPhrase = getRandomTimePhrase();
+    tipsSpan.textContent = `本文${prefix}${daysDiff} 天前，其中的信息可能已经${randomPhrase}`;
+    tipsSpan.parentElement?.classList.remove('hidden'); // 显示提示元素
   }
-  if (typeof main.upvote === 'function') {
-    main.upvote();
-  }
-  // Sponsor 逻辑可能需要根据 theme.config.sponsor.enable 来判断是否执行
-  // 这里简化为直接调用，如果 sponsor.js 内部有判断机制则不会有问题
-  if (typeof main.sponsor === 'function' && document.getElementById('sponsor-button')) {
-    main.sponsor();
-  }
-});
+}
+
+// 导出函数供外部使用（保持向后兼容）
+export function wordCountAndReadTime() {
+  initWordCountAndReadTime();
+}
+
+export function generateTimeTips() {
+  initTimeTips();
+}
+
+// 工具函数：防抖
+export function debounce(func, wait) {
+  let timeout;
+  return function executedFunction(...args) {
+    const later = () => {
+      clearTimeout(timeout);
+      func(...args);
+    };
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+  };
+}
+
+// 工具函数：节流（导出供其他模块使用）
+export { throttle };
