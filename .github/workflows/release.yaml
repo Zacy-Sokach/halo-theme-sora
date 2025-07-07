@@ -37,7 +37,7 @@ jobs:
       contents: write
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions:checkout@v4
       - name: Download Artifacts
         uses: actions/download-artifact@v4
         with:
@@ -54,31 +54,3 @@ jobs:
         with:
           bodyFile: "release-notes.md"
           artifacts: "dist/*"
-
-  appstore-release:
-    name: Halo App Store Release
-    needs: github-release
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Download Artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: package
-          path: dist
-      - name: Get Latest Release ID
-        id: get_release_id
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          RELEASE_ID=$(gh release view --json databaseId --jq '.databaseId')
-          # echo "Latest Release ID: $RELEASE_ID"
-          echo "RELEASE_ID=$RELEASE_ID" >> $GITHUB_OUTPUT
-      - name: Release to Halo App Store
-        uses: halo-sigs/app-store-release-action@v3
-        with:
-          github-token: ${{secrets.GITHUB_TOKEN}}
-          app-id: app-SBuSB
-          release-id: ${{ steps.get_release_id.outputs.RELEASE_ID }}
-          assets-dir: dist
-          halo-pat: ${{ secrets.HALO_PAT }}
