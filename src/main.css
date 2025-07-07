@@ -1,43 +1,12 @@
 @import "tailwindcss";
 @plugin "@iconify/tailwind4";
-/* @import "./HarmonyOS_Sans_SC/main.css"; */
+/* @import "./HarmonyOS_Sans_SC/main.css"; 如果 HarmonyOS_Sans_SC 是字体文件，请确保路径正确且字体已加载 */
 
+/* =========================================================
+   CSS 变量定义
+   --------------------------------------------------------- */
 :root {
-  --color-bg2: #f4f4f4;
-  --size-border-radius: 0.5rem;
-
-  /* Plugin CSS Variables - Light Mode */
-  --follow-card-radius: 1rem;    /* 卡片圆角 */
-  --follow-input-radius: 0.5rem; /* 输入框圆角 */
-  --follow-button-radius: 0.5rem; /* 按钮圆角 */
-
-  /* 卡片内边距 */
-  --follow-card-padding-sm: 1.5rem;  /* 小屏幕内边距 */
-  --follow-card-padding-md: 2rem;    /* 中屏幕内边距 */
-  --follow-card-padding-lg: 3rem;    /* 大屏幕内边距 */
-  
-  /* 卡片边框 */
-  --follow-card-border: 1px solid #e2e8f0;
-
-  /* Plugin Specific Default Colors (Light Mode) */
-  --follow-title-color: inherit; /* 默认继承，或设置为亮色模式下的具体颜色 */
-  --follow-description-color: inherit; /* 默认继承 */
-  --follow-bg-color: inherit; /* 默认继承 */
-  --follow-input-bg: #f3f4f6; /* 亮色模式下输入框背景色示例 */
-  --follow-input-border: #d1d5db; /* 亮色模式下输入框边框色示例 */
-  --follow-button-bg: #3b82f6; /* 亮色模式下按钮背景色示例 */
-  --follow-button-text: #ffffff; /* 亮色模式下按钮文本颜色示例 */
-  --follow-card-shadow: 0 4px 15px -3px rgba(0, 0, 0, 0.1); /* 亮色模式下卡片阴影示例 */
-}
-
-@theme {
-  --font-serif: "Noto Serif CJK", ui-serif, serif;
-  /* 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji' */
-  /* --font-semi-serif: "LXGW WenKai"; */
-  --font-sans-serif: "HarmonyOS Sans SC", ui-sans-serif, sans-serif;
-  --font-mono: "Maple Mono NF CN", ui-monospace, monospace;
-
-  /* 亮色模式颜色 */
+  /* 基础颜色变量 - 亮色模式默认值 */
   --color-primary-50: #fff0fc;
   --color-primary-100: #ffe3fc;
   --color-primary-200: #ffc7f9;
@@ -50,39 +19,80 @@
   --color-primary-900: #82045b;
   --color-primary-950: #5d003c;
 
-  --color-primary: var(--color-primary-900);
-  --color-primary-soft: rgb(from var(--color-primary) r g b / 0.15);
+  --color-primary: var(--color-primary-900); /* 主色调 */
+  --color-primary-soft: rgb(from var(--color-primary) r g b / 0.15); /* 主色调的柔和版本 */
 
-  --color-gray-light: var(--color-gray-100);
-  --color-gray: var(--color-neutral-600);
-  --color-gray-dark: var(--color-neutral-700);
+  --color-neutral-100: #f5f5f5; /* 灰色调，根据您的theme变量定义 */
+  --color-neutral-600: #525252;
+  --color-neutral-700: #404040;
 
-  --color-bg: #f9f9f9;
-  --color-bg2: #f4f4f4;
-  --color-text: #222;
-  --color-shadow: rgba(0, 0, 0, 0.1);
-  --color-border-light: #e7e9ef;
+  --color-gray-light: var(--color-neutral-100); /* 浅灰 */
+  --color-gray: var(--color-neutral-600); /* 中灰 */
+  --color-gray-dark: var(--color-neutral-700); /* 深灰 */
+
+  --color-bg: #f9f9f9; /* 主背景色 */
+  --color-bg2: #f4f4f4; /* 次背景色 (例如代码块、引用) */
+  --color-text: #222; /* 主要文本颜色 */
+  --color-shadow: rgba(0, 0, 0, 0.1); /* 阴影颜色 */
+  --color-border-light: #e7e9ef; /* 浅色边框 */
+
+  /* 通用尺寸变量 */
+  --size-border-radius: 0.5rem; /* 常用圆角 */
+
+  /* 插件特定 CSS 变量 - 亮色模式 */
+  --follow-card-radius: 1rem; /* 卡片圆角 */
+  --follow-input-radius: 0.5rem; /* 输入框圆角 */
+  --follow-button-radius: 0.5rem; /* 按钮圆角 */
+
+  /* 卡片内边距 */
+  --follow-card-padding-sm: 1.5rem; /* 小屏幕内边距 */
+  --follow-card-padding-md: 2rem; /* 中屏幕内边距 */
+  --follow-card-padding-lg: 3rem; /* 大屏幕内边距 */
+
+  /* 卡片边框 */
+  --follow-card-border: 1px solid #e2e8f0;
+
+  /* 插件特定默认颜色 (亮色模式) */
+  --follow-title-color: inherit; /* 默认继承，或设置为亮色模式下的具体颜色 */
+  --follow-description-color: inherit; /* 默认继承 */
+  --follow-bg-color: inherit; /* 默认继承 */
+  --follow-input-bg: #f3f4f6; /* 亮色模式下输入框背景色示例 */
+  --follow-input-border: #d1d5db; /* 亮色模式下输入框边框色示例 */
+  --follow-button-bg: #3b82f6; /* 亮色模式下按钮背景色示例 */
+  --follow-button-text: #ffffff; /* 亮色模式下按钮文本颜色示例 */
+  --follow-card-shadow: 0 4px 15px -3px rgba(0, 0, 0, 0.1); /* 亮色模式下卡片阴影示例 */
+}
+
+/* =========================================================
+   主题配置 (Tailwind @theme 扩展)
+   --------------------------------------------------------- */
+@theme {
+  --font-serif: "Noto Serif CJK", ui-serif, serif;
+  --font-sans-serif: "HarmonyOS Sans SC", ui-sans-serif, sans-serif;
+  --font-mono: "Maple Mono NF CN", ui-monospace, monospace;
 
   --breakpoint-sm: 480px;
 }
 
-/* 深色模式颜色 */
+/* =========================================================
+   深色模式颜色变量
+   --------------------------------------------------------- */
 @media (prefers-color-scheme: dark) {
   :root {
-    --color-primary: var(--color-primary-300);
+    --color-primary: var(--color-primary-300); /* 深色模式下主色调变浅 */
     --color-primary-soft: rgb(from var(--color-primary) r g b / 0.2);
-    
-    --color-gray-light: var(--color-gray-700);
+
+    --color-gray-light: var(--color-neutral-700);
     --color-gray: var(--color-neutral-400);
     --color-gray-dark: var(--color-neutral-300);
-    
-    --color-bg: #1a1a1a;
-    --color-bg2: #2a2a2a;
-    --color-text: #e5e5e5;
-    --color-shadow: rgba(0, 0, 0, 0.3);
-    --color-border-light: #404040;
 
-    /* Plugin CSS Variables - Dark Mode */
+    --color-bg: #1a1a1a; /* 深色模式主背景色 */
+    --color-bg2: #2a2a2a; /* 深色模式次背景色 */
+    --color-text: #e5e5e5; /* 深色模式主要文本颜色 */
+    --color-shadow: rgba(0, 0, 0, 0.3); /* 深色模式阴影颜色 */
+    --color-border-light: #404040; /* 深色模式边框 */
+
+    /* 插件特定 CSS 变量 - 深色模式 */
     --follow-title-color: #f4f4f5;
     --follow-description-color: #a1a1aa;
     --follow-bg-color: #18181b;
@@ -99,7 +109,7 @@
 /* 如果您的 HTML 中会直接使用这些类来强制深色模式，则保留此部分 */
 .color-scheme-dark,
 .dark,
-[data-color-scheme='dark'] { /* 将 follow-card 移除，因为变量已经定义在 :root 下 */
+[data-color-scheme='dark'] {
   color-scheme: dark;
   /* 确保这些变量引用到 :root 中已定义的深色模式变量 */
   --follow-title-color: var(--follow-title-color);
@@ -113,8 +123,10 @@
   --follow-card-border: var(--follow-card-border);
 }
 
-/*基本样式*/
 
+/* =========================================================
+   基础样式 (使用 @layer base 确保正确顺序)
+   --------------------------------------------------------- */
 @layer base {
   /* 全局默认设置 */
   html,
@@ -123,11 +135,11 @@
     padding: 0;
     height: 100%;
     font-size: 16px;
+    line-height: 1.8; /* 增加行高以提高可读性 */
   }
 
   html {
-    /* Enable smooth scrolling */
-    scroll-behavior: smooth;
+    scroll-behavior: smooth; /* 启用平滑滚动 */
   }
 
   body {
@@ -135,7 +147,7 @@
     color: var(--color-text);
     background-color: var(--color-bg);
     padding: 0 32px;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    transition: background-color 0.3s ease, color 0.3s ease; /* 添加颜色过渡 */
   }
 
   article {
@@ -147,7 +159,7 @@
   h2,
   h3,
   h4 {
-    margin: 1rem 0;
+    margin: 1.5rem 0 0.8rem; /* 调整标题上下边距 */
     color: var(--color-text);
     font-weight: bold;
     font-family: var(--font-serif);
@@ -156,26 +168,26 @@
   }
 
   h1 {
-    font-size: 1.75rem;
+    font-size: 2rem; /* 调整大小 */
   }
 
   h2 {
-    font-size: 1.5rem;
+    font-size: 1.75rem; /* 调整大小 */
   }
 
   h3 {
-    font-size: 1.35rem;
+    font-size: 1.5rem; /* 调整大小 */
   }
 
   h4 {
-    font-size: 1.2rem;
+    font-size: 1.25rem; /* 调整大小 */
   }
 
   /* 段落 */
   p {
     font-size: 1rem;
     margin: 1rem 0;
-    line-height: 1.8;
+    line-height: inherit; /* 继承 body 的行高 */
     color: var(--color-text);
   }
 
@@ -195,22 +207,27 @@
   }
 
   li {
-    margin: 1rem 0;
+    margin: 0.5rem 0; /* 调整列表项边距 */
     padding-left: 8px;
     position: relative;
     color: var(--color-text);
   }
 
+  /* 移除列表项左侧的竖线，因为它可能与默认列表样式冲突或不够通用 */
+  /* 如果您确实需要，可以考虑用其他方式实现 */
   li::before {
-    position: absolute;
-    top: 30px;
-    left: -12px;
-    height: calc(100% - 30px);
-    content: "";
-    border-left: 2px solid var(--color-border-light);
+    /* position: absolute; */
+    /* top: 30px; */
+    /* left: -12px; */
+    /* height: calc(100% - 30px); */
+    /* content: ""; */
+    /* border-left: 2px solid var(--color-border-light); */
+    content: ''; /* 移除内容 */
+    border: none; /* 移除边框 */
   }
 
   /* 链接 */
+  /* #post-content 内部的链接 */
   #post-content a {
     color: var(--color-primary);
     text-decoration: none;
@@ -219,16 +236,23 @@
         var(--color-primary-soft)
       )
       no-repeat bottom / 100% 0.1em;
+    transition: all 0.2s ease-in-out; /* 添加过渡效果 */
   }
 
   #post-content a:hover {
-    transition: all 0.2s;
     background-size: 100% 100%;
     border-radius: 0.3rem;
   }
 
+  /* footer 链接 */
   footer a {
     color: var(--color-primary);
+    text-decoration: none;
+    transition: color 0.2s ease-in-out;
+  }
+
+  footer a:hover {
+    text-decoration: underline;
   }
 
   /* 引用 */
@@ -237,8 +261,8 @@
     background-color: var(--color-bg2);
     border-left: 4px solid var(--color-primary);
     border-radius: 0 8px 8px 0;
-    margin: 1rem 0;
-    padding: 0.1rem 0.5rem 0.1rem 1.2rem;
+    margin: 1.5rem 0; /* 调整边距 */
+    padding: 0.8rem 1.2rem; /* 调整内边距 */
   }
 
   /* 代码块 */
@@ -252,18 +276,22 @@
   }
 
   pre {
-    padding: 8px;
+    padding: 1rem; /* 调整内边距 */
     border-radius: 8px;
-    white-space: pre-wrap;
+    white-space: pre-wrap; /* 允许代码换行 */
     background-color: var(--color-bg2);
     color: var(--color-text);
+    overflow-x: auto; /* 解决长代码块溢出问题 */
   }
 
   /* 图片 */
   #post-content img {
     border-radius: 8px;
-    margin: 0.5rem 0;
+    margin: 1.5rem auto; /* 居中图片并调整上下边距 */
+    display: block; /* 确保 img 是块级元素以便 margin auto 生效 */
     filter: drop-shadow(var(--color-shadow) 0px 6px 6px);
+    max-width: 100%; /* 确保图片不会溢出容器 */
+    height: auto; /* 保持图片比例 */
   }
 
   /*表格*/
@@ -271,13 +299,14 @@
     width: 100%;
     display: table;
     border-collapse: collapse;
+    margin: 1.5rem 0; /* 调整表格边距 */
   }
 
   table tr th,
   table tr td {
     border: 1px solid var(--color-border-light);
-    padding: 5px 10px;
-    text-align: justify;
+    padding: 8px 12px; /* 调整内边距 */
+    text-align: left; /* 表格文字左对齐更常见 */
     color: var(--color-text);
   }
 
@@ -288,7 +317,7 @@
 
   /* 按钮 */
   button.active {
-    opacity: 0.5;
+    opacity: 0.7; /* 适当调整活动按钮的不透明度 */
   }
 
   /*滚动条*/
@@ -299,45 +328,54 @@
 
   ::-webkit-scrollbar-thumb {
     border-radius: 8px;
-    background-color: var(--color-gray-300);
+    background-color: var(--color-gray); /* 使用灰色变量，亮色模式下为中灰 */
   }
-  
+
   /* 深色模式滚动条 */
   @media (prefers-color-scheme: dark) {
     ::-webkit-scrollbar-thumb {
-      background-color: var(--color-gray-600);
+      background-color: var(--color-gray-light); /* 深色模式下滚动条使用浅灰 */
     }
   }
 }
 
+
+/* =========================================================
+   组件样式 (使用 @layer components 确保正确顺序)
+   --------------------------------------------------------- */
 @layer components {
   /* 卡片 */
   .card {
     border-width: 1px;
     border-radius: var(--size-border-radius);
     border-color: var(--color-border-light);
-    padding: 1rem;
+    padding: 1.5rem; /* 调整默认内边距 */
     background-color: var(--color-bg);
     box-shadow: 0 0px 8px var(--color-shadow);
-    transition: background-color 0.3s ease, border-color 0.3s ease;
+    transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
   }
 
   .card-small {
     border-width: 1px;
     border-radius: var(--size-border-radius);
     border-color: var(--color-border-light);
-    padding: 0.4rem 0.5rem;
+    padding: 0.5rem 0.8rem; /* 调整小卡片内边距 */
     box-shadow: 0 0 4px var(--color-shadow);
     background-color: var(--color-bg);
-    transition: background-color 0.3s ease, border-color 0.3s ease;
+    transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
   }
 }
 
-/*top button*/
+
+/* =========================================================
+   特定功能样式
+   --------------------------------------------------------- */
+
+/* 上滑按钮 */
 .buttons {
   right: 1em;
   bottom: 5em;
-  z-index: 1;
+  z-index: 1000; /* 确保在最上层 */
   position: fixed;
 }
 
@@ -350,40 +388,48 @@
   border: 1px solid var(--color-border-light);
   transform: translateX(5em);
   transition:
-    color 0.3s, /* 添加 color 过渡 */
-    border 0.3s,
-    background 0.3s,
-    transform 0.3s;
-  color: var(--color-primary); /* 浅色模式下的图标颜色 */
+    color 0.3s ease,
+    border 0.3s ease,
+    background 0.3s ease,
+    transform 0.3s ease;
+  color: var(--color-primary); /* 浅色模式下图标颜色，通常是主色调 */
 }
 
 .to-top.active {
   transform: translateX(0);
 }
 
+/* 修正上滑按钮的 SVG 图标颜色 */
 .to-top::before {
   width: 1.5em;
-  /* 移除这里的 color 和 fill 属性，因为它们会被 SVG 内部的 currentColor 继承 */
+  /* 移除这里的 color 和 fill 属性，让 SVG 内部的 currentColor 生效 */
   display: inline-block;
   height: 1.5rem;
   vertical-align: -0.125em;
+  /* 将 SVG 内部的 fill 属性改为 currentColor，它会继承父元素 .to-top 的 color 属性 */
   content: url("data:image/svg+xml,%3Csvg xmlns='http/www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none'%3E%3Cpath d='M24 0v24H0V0zM12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035q-.016-.005-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093q.019.005.029-.008l.004-.014l-.034-.614q-.005-.019-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z'/%3E%3Cpath fill='currentColor' d='M12.707 3.636a1 1 0 0 0-1.414 0L5.636 9.293a1 1 0 1 0 1.414 1.414L11 6.757V20a1 1 0 1 0 2 0V6.757l3.95 3.95a1 1 0 0 0 1.414-1.414z'/%3E%3C/g%3E%3C/svg%3E");
 }
 
+/* 深色模式下上滑按钮图标颜色 */
 @media (prefers-color-scheme: dark) {
   .to-top {
-    color: var(--color-primary); /* 或者 var(--color-text)，取决于您希望的图标颜色 */
+    color: var(--color-primary); /* 或者您希望的任何颜色，例如 var(--color-text); */
   }
 }
 
-/*导航栏*/
+/* 导航栏 */
 #navigation a {
   color: var(--color-text);
   font-weight: bold;
   text-decoration: none;
+  transition: color 0.2s ease-in-out;
 }
 
-/* index */
+#navigation a:hover {
+  color: var(--color-primary); /* 悬停时使用主色 */
+}
+
+/* 首页导航项 */
 .index-nav {
   padding: 10px;
   font-size: 1rem;
@@ -394,8 +440,16 @@
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* icon  */
-/* iconify 样式 */
+.index-nav:hover {
+  background-color: var(--color-primary-soft); /* 悬停时使用主色柔和背景 */
+  color: var(--color-primary-900); /* 悬停时文字颜色 */
+  @media (prefers-color-scheme: dark) {
+    color: var(--color-primary-300); /* 深色模式下文字颜色 */
+  }
+}
+
+
+/* Iconify 样式 */
 .iconify-inline {
   vertical-align: -0.125rem;
 }
@@ -418,6 +472,11 @@
 /* 页码导航 */
 .pagination a {
   color: var(--color-text);
+  transition: color 0.2s ease-in-out;
+}
+
+.pagination a:hover {
+  color: var(--color-primary);
 }
 
 /* 首页文章卡片 */
@@ -426,9 +485,22 @@
   border-radius: 0.8rem;
   background-color: var(--color-bg);
   box-shadow: 0 0.1em 0.2em var(--color-shadow);
-  transition: all 0.2s;
+  transition: all 0.2s ease-in-out;
   position: relative;
+  display: block; /* 确保<a>标签是块级元素 */
+  color: var(--color-text); /* 确保整个卡片的默认文字颜色 */
 }
+
+/* 确保 .index-post-card 内部的标题和摘要继承正确颜色 */
+.index-post-card .post div {
+  color: var(--color-text);
+}
+
+.index-post-card:hover {
+  transform: translateY(-5px); /* 悬停上浮效果 */
+  box-shadow: 0 0.2em 0.5em var(--color-shadow); /* 悬停阴影加深 */
+}
+
 
 @keyframes float-in {
   0% {
@@ -444,6 +516,8 @@
 
 .index-post-card > .post {
   position: relative;
+  /* 确保文章内容区在图片之上 */
+  z-index: 1;
 }
 
 .index-post-card > .cover + .post {
@@ -460,7 +534,7 @@
   position: absolute;
   top: 0;
   right: 0;
-  transition: all 0.2s;
+  transition: all 0.2s ease-in-out;
   border-radius: 0 0.8em 0.8em 0;
 }
 
@@ -472,30 +546,43 @@
 }
 
 /* 目录 */
+#toc {
+  position: sticky;
+  top: 10px; /* 保持在页面顶部附近 */
+  padding-left: 1rem;
+  font-family: var(--font-serif);
+  font-size: 0.8rem;
+}
+
 #toc a {
   color: var(--color-text);
   opacity: 0.6;
+  text-decoration: none;
   transition: all 200ms ease-in-out;
+  display: block; /* 使整个链接区域可点击 */
+  padding: 0.2rem 0; /* 增加点击区域 */
 }
 
 #toc a:hover {
   opacity: 0.9;
+  color: var(--color-primary); /* 悬停时改变颜色 */
 }
 
 #toc .active > a {
   opacity: 1;
   font-weight: 600;
-}
-
-#toc .active {
-  border-left-color: var(--color-primary);
-  border-start-end-radius: 0.5rem;
-  transition: all 200ms ease-in-out;
+  color: var(--color-primary); /* 当前活跃项颜色 */
 }
 
 #toc > div {
   padding: 0.2rem 0;
   border-left: 3px solid var(--color-border-light);
+  transition: border-left-color 200ms ease-in-out;
+}
+
+#toc .active {
+  border-left-color: var(--color-primary);
+  border-start-end-radius: 0.5rem;
 }
 
 #toc .toc-item-level-1 {
@@ -514,7 +601,7 @@
   padding-left: calc(10px + 1.8rem);
 }
 
-/* License */
+/* 版权许可协议 */
 #license {
   position: relative;
   overflow: hidden;
@@ -547,7 +634,9 @@
 .post-time-tips {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http/www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%230000001a' d='M12 21q-1.875 0-3.512-.712t-2.85-1.925t-1.925-2.85T3 12t.713-3.512t1.924-2.85t2.85-1.925T12 3q2.05 0 3.888.875T19 6.35V5q0-.425.288-.712T20 4t.713.288T21 5v4q0 .425-.288.713T20 10h-4q-.425 0-.712-.288T15 9t.288-.712T16 8h1.75q-1.025-1.4-2.525-2.2T12 5Q9.075 5 7.038 7.038T5 12t2.038 4.963T12 19q2.375 0 4.25-1.425t2.475-3.675q.125-.4.45-.6t.725-.15q.425.05.675.362t.15.688q-.725 2.975-3.15 4.888T12 21m1-9.4l2.5 2.5q.275.275.275.7t-.275.7t-.7.275t-.7-.275l-2.8-2.8q-.15-.15-.225-.337T11 11.975V8q0-.425.288-.712T12 7t.713.288T13 8z'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
-  background-position: right;
+  background-position: right 1em center; /* 调整图标位置 */
+  background-size: 1.5em; /* 调整图标大小 */
+  padding-right: 2em; /* 为图标留出空间 */
 }
 
 /* 深色模式下的时效性提示图标 */
@@ -556,32 +645,22 @@
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http/www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23ffffff1a' d='M12 21q-1.875 0-3.512-.712t-2.85-1.925t-1.925-2.85T3 12t.713-3.512t1.924-2.85t2.85-1.925T12 3q2.05 0 3.888.875T19 6.35V5q0-.425.288-.712T20 4t.713.288T21 5v4q0 .425-.288.713T20 10h-4q-.425 0-.712-.288T15 9t.288-.712T16 8h1.75q-1.025-1.4-2.525-2.2T12 5Q9.075 5 7.038 7.038T5 12t2.038 4.963T12 19q2.375 0 4.25-1.425t2.475-3.675q.125-.4.45-.6t.725-.15q.425.05.675.362t.15.688q-.725 2.975-3.15 4.888T12 21m1-9.4l2.5 2.5q.275.275.275.7t-.275.7t-.7.275t-.7-.275l-2.8-2.8q-.15-.15-.225-.337T11 11.975V8q0-.425.288-.712T12 7t.713.288T13 8z'/%3E%3C/svg%3E");
   }
 }
+
 /* 深色模式头像切换 */
-@media (prefers-color-scheme: dark) {
-  .logo-light {
-    display: none !important;
-  }
-  
-  .logo-dark {
-    display: block !important;
-  }
+.logo-light {
+  display: block;
 }
 
-@media (prefers-color-scheme: light) {
-  .logo-light {
-    display: block !important;
-  }
-  
-  .logo-dark {
-    display: none !important;
-  }
-}
-
-/* 默认状态（亮色模式） */
 .logo-dark {
   display: none;
 }
 
-.logo-light {
-  display: block;
+@media (prefers-color-scheme: dark) {
+  .logo-light {
+    display: none !important;
+  }
+
+  .logo-dark {
+    display: block !important;
+  }
 }
