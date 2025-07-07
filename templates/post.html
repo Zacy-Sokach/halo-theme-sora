@@ -24,6 +24,7 @@
             th:text="${#dates.format(post.spec.publishTime, 'yyyy-MM-dd')}"
           ></time>
         </span>
+
         <th:block th:if="${post.metadata.annotations?.updateTime}">
           <span
             th:if="${post.metadata.annotations.updateTime} != ${#dates.format(post.spec.publishTime, 'yyyy-MM-dd')}"
@@ -48,6 +49,7 @@
             ></time>
           </span>
         </th:block>
+
         <span th:if="${not #lists.isEmpty(post.categories)}" class="flex items-center">
           <span
             class="icon-[material-symbols--folder-outline-rounded] iconify-inline mr-1"
@@ -62,6 +64,7 @@
             </th:block>
           </span>
         </span>
+
         <span th:if="${not #lists.isEmpty(post.tags)}" class="flex items-center">
           <span class="icon-[mdi--tag-outline] iconify-inline mr-1"></span>
           <span>
@@ -74,14 +77,17 @@
             </th:block>
           </span>
         </span>
+
         <span class="flex items-center">
           <span class="icon-[icon-park-outline--word] iconify-inline mr-1"></span>
           <span id="post-wordcount"></span>
         </span>
+
         <span class="flex items-center">
           <span class="icon-[mingcute--time-line] iconify-inline mr-1"></span>
           <span id="post-readtime"></span>
         </span>
+
         <span class="flex items-center">
           <span class="icon-[uil--chart-line] iconify-inline mr-1"></span>
           <span th:text="${post.stats.visit}"></span>
@@ -301,10 +307,10 @@
 
         <script>
           Artalk.init({
-            el: "#artalk",
-            site: "[[${site}]]",
-            // pageKey: "[[${post.metadata.name}]]",
-            server: "[[${server}]]", // 后端地址
+            el: "#artalk", // Artalk 容器元素
+            site: "[[${site}]]", // 网站名称
+            // pageKey: "[[${post.metadata.name}]]", // 页面唯一标识，可以根据需要启用
+            server: "[[${server}]]", // Artalk 后端地址
           });
         </script>
       </th:block>
@@ -320,16 +326,23 @@
 
     <script>
       document.addEventListener("DOMContentLoaded", () => {
+        // 生成目录
         main.generateTOC();
+        // 滚动时高亮目录项
         main.scrollHighlightTOC();
+        // 点击目录项时高亮
         main.clickHighlightTOC();
 
+        // 计算文章字数和阅读时间
         main.wordCountAndReadTime();
 
+        // 生成文章时效性提示
         main.generateTimeTips();
 
+        // 为文章中的链接添加外部图标（如果适用）
         main.addIconToLinks();
 
+        // 处理点赞功能
         main.upvote();
       });
     </script>
