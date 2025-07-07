@@ -1,21 +1,26 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  // content 数组告诉 Tailwind 哪些文件需要扫描来生成 CSS
-  // 请根据你的实际项目结构调整这些路径
   content: [
-    './index.html', // 如果你有 index.html
-    './src/**/*.{js,ts,jsx,tsx,vue,html,css}', // 扫描 src 文件夹下的所有相关文件
+    './index.html',
+    './src/**/*.{js,ts,jsx,tsx,vue,html,css}',
     // 确保这里包含了你所有使用 Tailwind 类名的文件
   ],
   theme: {
     extend: {
       colors: {
-        // 这里将你的 CSS 变量映射到 Tailwind 的颜色名称
-        // 这样你就可以使用像 text-gray, bg-primary-900 等 Tailwind 类了
+        // 直接覆盖或扩展 Tailwind 的 'gray' 色板
+        // 注意：这种方式在 Tailwind v4 中可能需要确保所有数字色阶都已定义，
+        // 否则你可能无法使用 text-gray-100, text-gray-200 等类。
         gray: {
           light: 'var(--color-gray-light)',
-          DEFAULT: 'var(--color-gray)',
+          DEFAULT: 'var(--color-gray)', // 这将让 text-gray 指向 --color-gray
           dark: 'var(--color-gray-dark)',
+          // 如果您在 HTML 中有 text-gray-100, text-gray-200 等，
+          // 您也需要在这里将它们映射到相应的 CSS 变量。
+          // 例如，如果您的 --color-neutral-100 对应 text-gray-100，则：
+          100: 'var(--color-neutral-100)',
+          600: 'var(--color-neutral-600)',
+          700: 'var(--color-neutral-700)',
         },
         primary: {
           50: 'var(--color-primary-50)',
@@ -30,6 +35,7 @@ module.exports = {
           900: 'var(--color-primary-900)',
           950: 'var(--color-primary-950)',
           DEFAULT: 'var(--color-primary)',
+          soft: 'var(--color-primary-soft)', // 不要忘记这个
         },
       },
     },
