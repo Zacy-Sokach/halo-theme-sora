@@ -29,6 +29,30 @@ spec:
               value: 1
             - label: 关闭
               value: 0
+        # --- 新增深色模式设置 ---
+        - $formkit: radio
+          name: default_theme_mode
+          label: 默认主题模式
+          help: 访客初次访问时的主题模式。如果选择“跟随系统”，将根据用户的系统设置自动切换。
+          value: system # 默认值设置为跟随系统
+          options:
+            - label: 浅色模式 (Light)
+              value: light
+            - label: 深色模式 (Dark)
+              value: dark
+            - label: 跟随系统 (System)
+              value: system
+        - $formkit: radio
+          name: enable_theme_toggle_button
+          label: 启用主题切换按钮
+          help: 是否在前端显示手动切换亮/暗模式的按钮。
+          value: 1 # 默认启用
+          options:
+            - label: 启用
+              value: 1
+            - label: 禁用
+              value: 0
+        # --- 深色模式设置结束 ---
     - group: comment
       label: 评论
       formSchema:
@@ -69,46 +93,30 @@ spec:
               options:
                 - label: BiliBili
                   value: bilibili
-                  # value: { name: "bilibili", icon: "mingcute--bilibili-line" }
                 - label: Email
                   value: email
-                  # value:
-                  #   {
-                  #     name: "email",
-                  #     icon: "material-symbols--mail-outline-rounded",
-                  #   }
                 - label: Facebook
                   value: facebook
-                  # value: { name: "facebook", icon: "mingcute--facebook-fill" }
                 - label: GitHub
                   value: github
-                  # value: { name: "github", icon: "mdi--github" }
                 - label: Instagram
                   value: instagram
-                  # value: { name: "instagram", icon: "mdi--instagram" }
                 - label: QQ
                   value: qq
-                  # value: { name: "qq", icon: "mingcute--qq-line" }
                 - label: Telegram
                   value: telegram
-                  # value: { name: "telegram", icon: "ic--baseline-telegram" }
                 - label: TikTok
                   value: tiktok
                 - label: Twitter/X
                   value: twitter
-                  # value: { name: "twitter", icon: "si--twitter-line" }
                 - label: YouTube
                   value: youtube
-                  # value: { name: "youtube", icon: "mingcute--youtube-line" }
                 - label: 微博
                   value: weibo
-                  # value: { name: "weibo", icon: "ri--weibo-fill" }
                 - label: 小红书
                   value: xiaohongshu
-                  # value: { name: "xiaohongshu", icon: "simple-icons--xiaohongshu" }
                 - label: 知乎
                   value: zhihu
-                  # value: { name: "zhihu", icon: "ri--zhihu-fill" }
             - $formkit: text
               name: url
               label: 地址
@@ -187,7 +195,6 @@ spec:
           if: "$enable == 1"
           name: list
           label: 赞助名单
-          # help: 是否显示赞助名单
           help: 开发中，不用在乎这个
           value: 0
           options:
