@@ -90,6 +90,10 @@ window.main = {
     const htmlElement = document.documentElement; // <html> 标签
     const sunIcon = document.getElementById('sun-icon');
     const moonIcon = document.getElementById('moon-icon');
+    const themeToggle = document.getElementById('theme-toggle');
+  if (!themeToggle) {
+    console.warn('深色模式切换按钮未找到');
+    return;
 
     // 初始化主题
     const savedTheme = localStorage.getItem('theme');
