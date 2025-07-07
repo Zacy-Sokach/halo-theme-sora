@@ -1,51 +1,18 @@
 <!doctype html>
 <html lang="zh-CN" xmlns:th="https/www.thymeleaf.org">
   <head th:replace="~{module/head(title = ${site.title})}">
-    <style>
-      /* 深色模式头像切换 */
-      @media (prefers-color-scheme: dark) {
-        .logo-light {
-          display: none !important;
-        }
-        
-        .logo-dark {
-          display: block !important;
-        }
-      }
-
-      @media (prefers-color-scheme: light) {
-        .logo-light {
-          display: block !important;
-        }
-        
-        .logo-dark {
-          display: none !important;
-        }
-      }
-
-      /* 默认状态（亮色模式） */
-      .logo-dark {
-        display: none;
-      }
-
-      .logo-light {
-        display: block;
-      }
-    </style>
-  </head>
+    </head>
 
   <body>
     <header>
       <div
         class="mt-20 mb-20 flex flex-col items-center justify-center gap-8 sm:flex-row sm:gap-14"
       >
-        <!-- 亮色模式头像 -->
         <img
           th:src="${theme.config.general.avatar}"
           class="h-40 rounded-full filter-none logo-light"
           alt="Avatar"
         />
-        <!-- 深色模式头像 -->
         <img
           th:src="${theme.config.general.avatarDark != null ? theme.config.general.avatarDark : theme.config.general.avatar}"
           class="h-40 rounded-full filter-none logo-dark"
@@ -55,10 +22,12 @@
         <div class="flex flex-col items-center gap-5 font-mono">
           <div class="text-4xl" th:text="${site.title}"></div>
 
-          <!-- 社交媒体 -->
           <div class="text-center">
             <th:block th:each="item : ${theme?.config?.social?.socials}">
-              <a class="text-black" th:href="@{${item.url}}">
+              <a
+                class="inline-block text-black hover:text-blue-600 dark:text-white dark:hover:text-blue-300"
+                th:href="@{${item.url}}"
+              >
                 <span
                   class="iconify-large"
                   th:classappend="${{
@@ -81,7 +50,7 @@
             </th:block>
 
             <a
-              class="text-black"
+              class="inline-block text-black hover:text-blue-600 dark:text-white dark:hover:text-blue-300"
               th:if="${theme.config.general.rss == 1}"
               href="/rss.xml"
             >
@@ -89,7 +58,6 @@
             </a>
           </div>
 
-          <!-- 导航栏 -->
           <nav class="flex justify-center gap-3">
             <th:block th:with="menu = ${menuFinder.getPrimary()}">
               <th:block th:with="menuItems = ${menu.menuItems}">
@@ -113,47 +81,37 @@
     </header>
 
     <main th:fragment="postList" class="mx-auto max-w-[768px]">
-      <!-- <div class="mb-6 ml-4 text-2xl">Recent Posts</div> -->
-
       <div class="flex flex-col gap-5">
         <a
           th:each="post : ${posts.items}"
           th:href="@{${post.status.permalink}}"
-          class="index-post-card hover:shadow-card text-black transition duration-300"
-        >
-          <img
+          class="index-post-card hover:shadow-card transition duration-300 block"
+          ><img
             th:if="${!#strings.isEmpty(post.spec.cover)}"
             th:src="${post.spec.cover}"
             class="cover"
+            alt="文章封面"
           />
 
           <div class="post mx-4 my-4 flex flex-col gap-2">
-            <!-- 标题 -->
             <div
               th:text="${post.spec.title}"
-              class="font-serif font-semibold"
+              class="font-serif font-semibold text-lg sm:text-xl md:text-2xl"
               style="font-size: 1.2rem"
             ></div>
 
-            <!-- 摘要 -->
             <div
               th:if="${#strings.isEmpty(post.spec.cover)}"
-              th:text="${post.status.excerpt != null and #strings.length(post.status.excerpt) > 150} ? ${#strings.substring(post.status.excerpt, 0, 150)} + '...' : ${post.status.excerpt}"
-              style="font-size: 0.9rem"
-              class="text-gray"
+              th:text="${#strings.length(post.status.excerpt) > 150 ? #strings.substring(post.status.excerpt, 0, 150) + '...' : post.status.excerpt}"
+              class="text-gray text-sm leading-relaxed"
             ></div>
             <div
               th:if="${!#strings.isEmpty(post.spec.cover)}"
-              th:text="${post.status.excerpt != null and #strings.length(post.status.excerpt) > 80} ? ${#strings.substring(post.status.excerpt, 0, 80)} + '...' : ${post.status.excerpt}"
-              style="font-size: 0.9rem"
-              class="text-gray"
+              th:text="${#strings.length(post.status.excerpt) > 80 ? #strings.substring(post.status.excerpt, 0, 80) + '...' : post.status.excerpt}"
+              class="text-gray text-sm leading-relaxed"
             ></div>
 
-            <!-- 元信息 -->
-            <div
-              class="flex items-center justify-between"
-              style="font-size: 0.8rem"
-            >
+            <div class="flex items-center justify-between text-xs sm:text-sm">
               <time
                 th:text="${#dates.format(post.spec.publishTime, 'yyyy-MM-dd')}"
                 class="text-gray"
