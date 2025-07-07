@@ -507,3 +507,27 @@ html.dark {
   background-repeat: no-repeat;
   background-position: right;
   }
+/* --- 主题切换按钮的固定定位样式 --- */
+.theme-toggle-fixed {
+  right: 1em; /* 与 .buttons 相同的右侧定位 */
+  bottom: 2em; /* 调整位置，使其在回到顶部按钮上方或下方，你可以根据需要调整 */
+  z-index: 1;
+  position: fixed;
+}
+
+.theme-toggle-fixed button {
+  padding: 0.5em; /* 和 .to-top 按钮保持一致的内边距 */
+  display: block;
+  cursor: pointer;
+  background: var(--color-bg);
+  border-radius: 0.25em;
+  border: 1px solid var(--color-border-light);
+  /* 如果你需要滑入动画，可以添加： */
+  /* transform: translateX(5em); */
+  /* transition: transform 0.3s; */
+}
+
+/* 如果你需要滑入动画，并且在JS中控制 active 类，可以添加：*/
+/* .theme-toggle-fixed.active {
+  transform: translateX(0);
+} */
