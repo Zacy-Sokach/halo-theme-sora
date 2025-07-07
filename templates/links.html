@@ -16,9 +16,9 @@
           text-align: center;
           border-radius: 4px;
           background: #fff;
-          background: var(--light-background);
+          background: var(--light-background); /* 注意：这个变量在你的 main.css 中没有定义，可能会有问题 */
           border: 1px solid #ddd;
-          border-color: var(--border);
+          border-color: var(--border); /* 注意：这个变量在你的 main.css 中没有定义，可能会有问题 */
           transition:
             border-color 0.3s,
             background-color 0.3s;
@@ -61,7 +61,7 @@
         h2.links-team:before {
           content: "#";
           color: #6f9fc7;
-          color: var(--blue);
+          color: var(--blue); /* 注意：这个变量在你的 main.css 中没有定义，可能会有问题 */
           margin-right: 0.5em;
         }
 
@@ -104,7 +104,32 @@
       </div>
     </main>
 
+    <aside>
+      <div class="buttons">
+        <a class="to-top" href="#"></a>
+      </div>
+      <div class="theme-toggle-fixed">
+        <button id="theme-toggle" class="card-small" aria-label="Toggle dark mode">
+          <span id="sun-icon" class="iconify icon-[ph--sun-fill]"></span>
+          <span id="moon-icon" class="iconify icon-[ph--moon-fill] hidden"></span>
+        </button>
+      </div>
+    </aside>
+
     <footer th:replace="~{module/footer}"></footer>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        // 外部链接在新窗口打开，这是在任何页面都需要的功能
+        document.querySelectorAll("a[href^='https://']").forEach((link) => {
+          link.setAttribute("target", "_blank");
+          link.setAttribute("rel", "noopener");
+        });
+        
+        // 确保 main.js 中的回到顶部按钮逻辑被调用
+        // main.js 中的 DOMContentLoaded 已经包含了 window.addEventListener("scroll", main.to_top); 和 main.to_top();
+        // 所以这里不需要重复调用了
+      });
+    </script>
   </body>
 </html>
-
