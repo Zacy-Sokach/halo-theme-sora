@@ -22,11 +22,13 @@ module.exports = {
         // 则保留 light 和 dark 的映射，但如果没有，也可以考虑移除整个 gray 对象
         gray: {
             light: 'var(--color-gray-light)',
-            // 移除 DEFAULT: 'var(--color-gray)',
+            DEFAULT: 'var(--color-gray)',
             dark: 'var(--color-gray-dark)',
         },
         primary: { /* ... 确保您的 primary 颜色定义正确 ... */ },
       },
+        textColor: {
+        'gray': 'var(--color-neutral-600)',
       // 可以在这里添加您的字体定义等
       fontFamily: {
         serif: 'var(--font-serif)',
