@@ -513,8 +513,9 @@
 }
 
 #license .license-item {
-  @apply text-gray text-sm;
-  color: var(--color-gray); /* 使用变量 */
+  /* 移除了 @apply text-gray，因为会冲突且不需要 */
+  @apply text-sm; /* 如果你还想用 text-sm 的话 */
+  color: var(--color-gray); /* 保持直接使用 CSS 变量 */
 }
 
 /* 时效性提示 */
