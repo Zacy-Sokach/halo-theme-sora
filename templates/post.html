@@ -323,19 +323,22 @@
         main.scrollHighlightTOC();
         main.clickHighlightTOC();
 
-        main.wordCountAndReadTime();
-
-        main.generateTimeTips();
+        // 只有当存在 #post-content 元素时才执行这些函数，避免在其他页面报错
+        const postContent = document.getElementById("post-content");
+        if (postContent) {
+          main.wordCountAndReadTime();
+          main.generateTimeTips();
+        }
 
         main.addIconToLinks();
-
         main.upvote();
+
+        // 仅当赞赏功能启用且赞赏按钮存在时才执行 sponsor()
+        const sponsorButton = document.getElementById('sponsor-button');
+        if (typeof main.sponsor === 'function' && sponsorButton && [[${theme.config.sponsor.enable}]]) {
+            main.sponsor();
+        }
       });
     </script>
-    <script th:if="${theme.config.sponsor.enable}">
-      document.addEventListener("DOMContentLoaded", () => {
-        main.sponsor();
-      });
-    </script>
-  </body>
+    </body>
 </html>
