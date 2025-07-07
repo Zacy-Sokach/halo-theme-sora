@@ -1,58 +1,70 @@
-name: Release
+name: Release # 工作流名称，在 GitHub Actions 界面显示
 
 on:
   release:
-    types: [published] # 当一个 release 被发布时触发
+    types: [published] # 当一个 GitHub Release 被“发布”时触发此工作流
 
 jobs:
   package:
-    name: Package Theme
-    runs-on: ubuntu-latest
+    name: 打包主题 # Job 名称
+    runs-on: ubuntu-latest # 在 Ubuntu 最新版操作系统上运行此 Job
     steps:
-      - uses: actions/checkout@v4
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v3
-        with:
-          version: "10"
-      - name: Install dependencies
-        run: pnpm install
-      - name: Build
-        run: pnpm package
-      - name: Upload Artifacts # 此步骤用于将dist目录内容保存为工作流产物，供后续步骤使用
-        uses: actions/upload-artifact@v4
-        with:
-          name: package
-          path: dist
+      - name: 检出代码 # 步骤名称：获取仓库代码
+        uses: actions/checkout@v4 # 使用 actions/checkout Action 检出当前仓库
 
-  upload_release_asset: # 新增的 job
-    name: Upload Release Asset
-    runs-on: ubuntu-latest
-    needs: package # 确保在 package job 完成后才运行
+      - name: 设置 Node.js 环境 # 步骤名称：配置 Node.js
+        uses: actions/setup-node@v4 # 使用 actions/setup-node Action
+        with:
+          node-version: "20" # 指定 Node.js 版本为 20
+
+      - name: 设置 pnpm # 步骤名称：配置 pnpm 包管理器
+        uses: pnpm/action-setup@v3 # 使用 pnpm/action-setup Action
+        with:
+          version: "10" # 指定 pnpm 版本为 10
+
+      - name: 安装项目依赖 # 步骤名称：安装 Node.js 模块依赖
+        run: pnpm install # 运行 pnpm install 命令
+
+      - name: 清理 dist 目录 # 新增步骤：清除旧的构建产物
+        run: rm -rf dist # 确保每次构建都是全新的
+
+      - name: 构建主题包 # 步骤名称：执行主题的构建和打包过程
+        # 此命令通常在 package.json 的 "scripts" 中定义，
+        # 负责将主题文件编译、压缩，并准备好发布到 dist 目录。
+        run: pnpm package # 运行 pnpm package 脚本
+
+      - name: 上传构建产物 # 步骤名称：将 dist 目录内容保存为工作流产物
+        uses: actions/upload-artifact@v4 # 使用 actions/upload-artifact Action
+        with:
+          name: package # 产物名称，方便后续 Job 下载
+          path: dist # 指定要上传的目录路径 (主题构建输出目录)
+
+  upload_release_asset: # Job 名称：上传发布资产
+    name: 上传发布资产
+    runs-on: ubuntu-latest # 在 Ubuntu 最新版操作系统上运行此 Job
+    needs: package # 明确此 Job 依赖于 'package' Job，确保 'package' 成功后才运行
+
     steps:
-      - name: Download Artifact
-        uses: actions/download-artifact@v4
+      - name: 下载构建产物 # 步骤名称：下载上一个 Job 生成的产物
+        uses: actions/download-artifact@v4 # 使用 actions/download-artifact Action
         with:
-          name: package
-          path: dist # 下载到 dist 目录
+          name: package # 指定要下载的产物名称
+          path: dist # 指定下载到本地的目录路径
 
-      - name: Compress for Release # 可选：打包成zip或tar.gz，更方便下载
+      - name: 压缩为主题发布包 # 步骤名称：将下载的产物压缩成 ZIP 文件 (直接打包主题内容)
         run: |
-          cd dist
-          zip -r theme-package-${{ github.event.release.tag_name }}.zip ./*
-          # 或者使用 tar.gz
-          # tar -czvf theme-package-${{ github.event.release.tag_name }}.tar.gz ./*
-        # 确保压缩后的文件名为 theme-package-vX.Y.Z.zip 或 .tar.gz
-        id: compress_step # 给这个步骤一个ID，以便引用输出
+          cd dist # 进入 dist 目录
+          # 将 dist 目录下的所有文件和文件夹压缩到 ZIP 包的根目录，并放置在上一级目录
+          # 这样解压后就是主题的根目录结构
+          zip -r ../theme-package-${{ github.event.release.tag_name }}.zip ./*
+        id: compress_step
 
-      - name: Upload Release Asset
-        uses: softprops/action-gh-release@v1 # 使用 softprops/action-gh-release@v1 来上传资产
+      - name: 上传 Release Asset # 步骤名称：将压缩包上传到 GitHub Release
+        uses: softprops/action-gh-release@v1 # 使用 softprops/action-gh-release Action
         with:
-          files: dist/theme-package-${{ github.event.release.tag_name }}.zip # 指定要上传的文件路径
-          # 或者如果你使用了 tar.gz:
-          # files: dist/theme-package-${{ github.event.release.tag_name }}.tar.gz
+          # 指定要上传的文件路径。现在它位于工作区的根目录。
+          files: theme-package-${{ github.event.release.tag_name }}.zip
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # GitHub 提供的默认 token
+          # GITHUB_TOKEN 是 GitHub Actions 提供的默认 token，拥有对当前仓库的读写权限，
+          # 用于认证上传操作。
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
