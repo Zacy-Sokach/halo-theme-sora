@@ -25,31 +25,16 @@
           ></time>
         </span>
 
-        <th:block th:if="${post.metadata.annotations?.updateTime}">
-          <span
-            th:if="${post.metadata.annotations.updateTime} != ${#dates.format(post.spec.publishTime, 'yyyy-MM-dd')}"
-            class="flex items-center"
-          >
-            <span class="icon-[bx--calendar-check] iconify-inline mr-1"></span>
-            <time
-              id="post-update-time"
-              th:text="${post.metadata.annotations.updateTime}"
-            ></time>
-          </span>
-        </th:block>
-        <th:block th:unless="${post.metadata.annotations?.updateTime}">
-          <span
-            th:if="${#dates.format(post.status.lastModifyTime, 'yyyy-MM-dd')} != ${#dates.format(post.spec.publishTime, 'yyyy-MM-dd')}"
-            class="flex items-center"
-          >
-            <span class="icon-[bx--calendar-check] iconify-inline mr-1"></span>
-            <time
-              id="post-update-time"
-              th:text="${#dates.format(post.status.lastModifyTime, 'yyyy-MM-dd')}"
-            ></time>
-          </span>
-        </th:block>
-
+        <span
+          th:if="${post.status.lastModifyTime != null and #dates.format(post.status.lastModifyTime, 'yyyy-MM-dd') != #dates.format(post.spec.publishTime, 'yyyy-MM-dd')}"
+          class="flex items-center"
+        >
+          <span class="icon-[bx--calendar-check] iconify-inline mr-1"></span>
+          <time
+            id="post-update-time"
+            th:text="${#dates.format(post.status.lastModifyTime, 'yyyy-MM-dd')}"
+          ></time>
+        </span>
         <span th:if="${not #lists.isEmpty(post.categories)}" class="flex items-center">
           <span
             class="icon-[material-symbols--folder-outline-rounded] iconify-inline mr-1"
@@ -129,14 +114,9 @@
             <div>
               <div class="license-item text-gray-500 dark:text-gray-400">更新于</div>
               <time
-                th:if="${post.metadata.annotations?.updateTime}"
-                th:text="${post.metadata.annotations.updateTime}"
-              ></time>
-              <time
-                th:unless="${post.metadata.annotations?.updateTime}"
                 th:text="${#dates.format(post.status.lastModifyTime, 'yyyy-MM-dd')}"
               ></time>
-            </div>
+              </div>
 
             <div>
               <div class="license-item text-gray-500 dark:text-gray-400">许可</div>
