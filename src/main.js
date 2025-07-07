@@ -109,3 +109,92 @@ export function generateTimeTips() {
     " 天前，其中的信息可能已经" +
     randomWords[randomIndex];
 }
+
+// 这是您找到的原始 main.js (或其他名称) 文件的内容
+// ... 现有代码 ...
+
+// 从这里开始添加主题切换逻辑
+(function() { // 使用 IIFE (立即执行函数表达式) 包裹，确保变量不会污染全局作用域
+  const themeToggle = document.getElementById('theme-toggle');
+  const htmlElement = document.documentElement; // 这就是 <html> 标签
+  const sunIcon = document.getElementById('sun-icon');
+  const moonIcon = document.getElementById('moon-icon');
+
+  // 1. 检查用户的系统偏好（首次加载或没有 localStorage 时）
+  //    以及从 localStorage 读取保存的偏好
+  const savedTheme = localStorage.getItem('theme');
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+  // 根据保存的偏好或系统偏好设置初始主题
+  // 注意：这段代码在 <head> 中执行时，DOM 可能还没有完全加载，
+  // 所以对于 sunIcon 和 moonIcon 的操作，最好放在 DOMContentLoaded 事件监听器中
+  // 或者确保这些图标的 HTML 元素在 JS 执行前就存在于 DOM 中。
+  // 但对于 htmlElement.classList.add/remove('dark') 是没问题的。
+  if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+    htmlElement.classList.add('dark');
+  } else {
+    htmlElement.classList.remove('dark');
+  }
+
+  // 确保在 DOM 完全加载后再操作图标和添加事件监听器
+  document.addEventListener('DOMContentLoaded', () => {
+    // 初始图标显示状态 (根据页面加载时 htmlElement 上的 'dark' 类)
+    if (htmlElement.classList.contains('dark')) {
+      if (sunIcon && moonIcon) {
+          sunIcon.classList.add('hidden');
+          moonIcon.classList.remove('hidden');
+      }
+    } else {
+      if (sunIcon && moonIcon) {
+          sunIcon.classList.remove('hidden');
+          moonIcon.classList.add('hidden');
+      }
+    }
+
+    // 2. 添加按钮点击事件监听器
+    if (themeToggle) {
+      themeToggle.addEventListener('click', () => {
+        // 切换 dark 类
+        htmlElement.classList.toggle('dark');
+
+        // 更新 localStorage
+        if (htmlElement.classList.contains('dark')) {
+          localStorage.setItem('theme', 'dark');
+          // 切换图标
+          if (sunIcon && moonIcon) {
+              sunIcon.classList.add('hidden');
+              moonIcon.classList.remove('hidden');
+          }
+        } else {
+          localStorage.setItem('theme', 'light');
+          // 切换图标
+          if (sunIcon && moonIcon) {
+              sunIcon.classList.remove('hidden');
+              moonIcon.classList.add('hidden');
+          }
+        }
+      });
+    }
+
+    // 可选：监听系统主题变化，并更新 UI（如果用户没有手动选择主题）
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (event) => {
+      // 只有当用户没有手动选择主题时，才响应系统主题变化
+      if (!localStorage.getItem('theme')) {
+        if (event.matches) {
+          htmlElement.classList.add('dark');
+          if (sunIcon && moonIcon) {
+              sunIcon.classList.add('hidden');
+              moonIcon.classList.remove('hidden');
+          }
+        } else {
+          htmlElement.classList.remove('dark');
+          if (sunIcon && moonIcon) {
+              sunIcon.classList.remove('hidden');
+              moonIcon.classList.add('hidden');
+          }
+        }
+      }
+    });
+  });
+
+})(); // IIFE 结束
