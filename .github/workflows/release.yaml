@@ -16,11 +16,16 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'pnpm' # 确保这里是 pnpm
+          cache: 'pnpm'
           cache-dependency-path: 'pnpm-lock.yaml'
 
+      # START MODIFICATION: 替换为官方 pnpm setup action
       - name: 安装 pnpm
-        run: npm install -g pnpm # 使用 npm 全局安装 pnpm
+        uses: pnpm/action-setup@v3 # 使用 pnpm 官方的 setup action
+        with:
+          version: 8 # 或者您项目使用的 pnpm 版本，例如 8、9、latest 等
+          run_install: false # 不在这里运行 pnpm install，让后续的 "安装项目依赖" 步骤来做
+      # END MODIFICATION
 
       - name: 设置 pnpm # 步骤名称：配置 pnpm 包管理器
         uses: pnpm/action-setup@v3 # 使用 pnpm/action-setup Action
