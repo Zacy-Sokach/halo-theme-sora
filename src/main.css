@@ -5,62 +5,6 @@
 :root {
   --color-bg2: #f4f4f4;
   --size-border-radius: 0.5rem;
-}
-
-@theme {
-  --font-serif: "Noto Serif CJK", ui-serif, serif;
-  /* 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji' */
-  /* --font-semi-serif: "LXGW WenKai"; */
-  --font-sans-serif: "HarmonyOS Sans SC", ui-sans-serif, sans-serif;
-  --font-mono: "Maple Mono NF CN", ui-monospace, monospace;
-
-  /* --color-primary-50: #faf8fc;
-  --color-primary-100: #f4eff8;
-  --color-primary-200: #ece1f3;
-  --color-primary-300: #dcc9e9;
-  --color-primary-400: #c5a7d9;
-  --color-primary-500: #ae84c8;
-  --color-primary-600: #9b6cb7;
-  --color-primary-700: #82549c;
-  --color-primary-800: #6d4881;
-  --color-primary-900: #593b68;
-  --color-primary-950: #3c2249; */
-
-  /* --color-primary-50: #eff6ff;
-  --color-primary-100: #dbeafe;
-  --color-primary-200: #c0dbfd;
-  --color-primary-300: #94c5fc;
-  --color-primary-400: #62a5f8;
-  --color-primary-500: #4285f4;
-  --color-primary-600: #2763e9;
-  --color-primary-700: #1f4ed6;
-  --color-primary-800: #2041ad;
-  --color-primary-900: #1f3b89;
-  --color-primary-950: #182553; */
-
-  /* --color-primary-50: #f2f5fc;
-  --color-primary-100: #e1e9f8;
-  --color-primary-200: #c9d9f4;
-  --color-primary-300: #a4c1ec;
-  --color-primary-400: #7fa5e3;
-  --color-primary-500: #5980d8;
-  --color-primary-600: #4466cc;
-  --color-primary-700: #3b53ba;
-  --color-primary-800: #354598;
-  --color-primary-900: #2f3d79;
-  --color-primary-950: #21274a; */
-
-  /* --color-secondary-50: #f4f6fb;
-  --color-secondary-100: #e8ecf6;
-  --color-secondary-200: #ccd7eb;
-  --color-secondary-300: #9fb6da;
-  --color-secondary-400: #6c90c4;
-  --color-secondary-500: #4870ac;
-  --color-secondary-600: #375992;
-  --color-secondary-700: #2d4877;
-  --color-secondary-800: #293e63;
-  --color-secondary-900: #263654;
-  --color-secondary-950: #192338; */
 
   --color-primary-50: #fff0fc;
   --color-primary-100: #ffe3fc;
@@ -72,23 +16,94 @@
   --color-primary-700: #dc0097;
   --color-primary-800: #b5007c;
   --color-primary-900: #82045b;
-  /* --color-primary-900: rgb(130, 4, 91); */
   --color-primary-950: #5d003c;
 
   --color-primary: var(--color-primary-900);
-  /* --color-primary: hsl(318.57, 94.03%, 26.27%); */
-  /* --color-primary-soft: hsl(318.57 94.03% 26.27% / 15%); */
   --color-primary-soft: rgb(from var(--color-primary) r g b / 0.15);
 
   --color-gray-light: var(--color-gray-100);
   --color-gray: var(--color-neutral-600);
   --color-gray-dark: var(--color-neutral-700);
 
-  /* --color-text: #5f6368; */
-  /* --color-text: #383a42; */
-  --color-bg: #f9f9f9;
-  --color-shadow: rgba(0, 0, 0, 0.1);
-  --color-border-light: #e7e9ef;
+  --color-text: #383a42; /* 文本颜色 */
+  --color-bg: #f9f9f9; /* 主背景色 */
+  --color-shadow: rgba(0, 0, 0, 0.1); /* 阴影颜色 */
+  --color-border-light: #e7e9ef; /* 浅边框颜色 */
+  --color-heading-border: #f2f3f4; /* 标题下划线颜色 */
+  --color-list-border: #dfe0e1; /* 列表左侧边框颜色 */
+  --color-code-bg: var(--color-bg2); /* 行内代码背景色 */
+  --color-table-border: #d9dfe4; /* 表格边框颜色 */
+  --color-scrollbar-thumb: var(--color-gray-300); /* 滚动条滑块颜色 */
+
+  --breakpoint-sm: 480px;
+}
+
+/* 深色模式变量 */
+:root {
+  --dark-color-bg2: #282828;
+  --dark-color-primary-50: #3f0028;
+  --dark-color-primary-100: #5d003c;
+  --dark-color-primary-200: #82045b;
+  --dark-color-primary-300: #b5007c;
+  --dark-color-primary-400: #dc0097;
+  --dark-color-primary-500: #fc06ba;
+  --dark-color-primary-600: #ff2ad6;
+  --dark-color-primary-700: #ff5ae7;
+  --dark-color-primary-800: #ff99f2;
+  --dark-color-primary-900: #ffc7f9;
+  --dark-color-primary-950: #ffe3fc;
+
+  --dark-color-text: #e0e0e0; /* 深色模式文本颜色 */
+  --dark-color-bg: #1e1e1e; /* 深色模式主背景色 */
+  --dark-color-shadow: rgba(255, 255, 255, 0.1); /* 深色模式阴影颜色 */
+  --dark-color-border-light: #333; /* 深色模式浅边框颜色 */
+  --dark-color-heading-border: #333; /* 深色模式标题下划线颜色 */
+  --dark-color-list-border: #555; /* 深色模式列表左侧边框颜色 */
+  --dark-color-code-bg: var(--dark-color-bg2); /* 深色模式行内代码背景色 */
+  --dark-color-table-border: #555; /* 深色模式表格边框颜色 */
+  --dark-color-scrollbar-thumb: var(--color-gray-600); /* 深色模式滚动条滑块颜色 */
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg2: var(--dark-color-bg2);
+    --color-primary-50: var(--dark-color-primary-50);
+    --color-primary-100: var(--dark-color-primary-100);
+    --color-primary-200: var(--dark-color-primary-200);
+    --color-primary-300: var(--dark-color-primary-300);
+    --color-primary-400: var(--dark-color-primary-400);
+    --color-primary-500: var(--dark-color-primary-500);
+    --color-primary-600: var(--dark-color-primary-600);
+    --color-primary-700: var(--dark-color-primary-700);
+    --color-primary-800: var(--dark-color-primary-800);
+    --color-primary-900: var(--dark-color-primary-900);
+    --color-primary-950: var(--dark-color-primary-950);
+
+    --color-primary: var(--dark-color-primary-700); /* 深色模式下主色调可以调整为浅一点的，对比更明显 */
+    --color-primary-soft: rgb(from var(--color-primary) r g b / 0.15);
+
+    /* 针对深色模式覆盖其他颜色变量 */
+    --color-text: var(--dark-color-text);
+    --color-bg: var(--dark-color-bg);
+    --color-shadow: var(--dark-color-shadow);
+    --color-border-light: var(--dark-color-border-light);
+    --color-heading-border: var(--dark-color-heading-border);
+    --color-list-border: var(--dark-color-list-border);
+    --color-code-bg: var(--dark-color-code-bg);
+    --color-table-border: var(--dark-color-table-border);
+    --color-scrollbar-thumb: var(--dark-color-scrollbar-thumb);
+
+    /* 深色模式下的灰度值也需要调整 */
+    --color-gray-light: #333; /* 对应浅色模式的 var(--color-gray-100) */
+    --color-gray: #b0b0b0; /* 对应浅色模式的 var(--color-neutral-600) */
+    --color-gray-dark: #e0e0e0; /* 对应浅色模式的 var(--color-neutral-700) */
+  }
+}
+
+@theme {
+  --font-serif: "Noto Serif CJK", ui-serif, serif;
+  --font-sans-serif: "HarmonyOS Sans SC", ui-sans-serif, sans-serif;
+  --font-mono: "Maple Mono NF CN", ui-monospace, monospace;
 
   --breakpoint-sm: 480px;
 }
@@ -112,8 +127,8 @@
 
   body {
     font-family: var(--font-sans-serif);
-    /* color: #222; */
-    /* background-color: #f9f9f9; */
+    color: var(--color-text); /* 使用变量 */
+    background-color: var(--color-bg); /* 使用变量 */
     padding: 0 32px;
   }
 
@@ -127,36 +142,24 @@
   h3,
   h4 {
     margin: 1rem 0;
-    /* color: var(--color-primary); */
+    color: var(--color-primary); /* 标题颜色使用主色调 */
     font-weight: bold;
     font-family: var(--font-serif);
     padding-bottom: 8px;
-    border-bottom: 1px solid #f2f3f4;
+    border-bottom: 1px solid var(--color-heading-border); /* 使用变量 */
   }
 
   h1 {
     font-size: 1.75rem;
   }
-  /* h1:before {
-    content: "# ";
-    color: #2d8cdc;
-  } */
 
   h2 {
     font-size: 1.5rem;
   }
-  /* h2:before {
-    content: "## ";
-    color: #2d8cdc;
-  } */
 
   h3 {
     font-size: 1.35rem;
   }
-  /* h3:before {
-    content: "### ";
-    color: #2d8cdc;
-  } */
 
   h4 {
     font-size: 1.2rem;
@@ -166,14 +169,12 @@
   p {
     font-size: 1rem;
     margin: 1rem 0;
-    /*text-align: justify;*/
     line-height: 1.8;
   }
 
   /* 列表 */
   ul,
   ol {
-    /*margin: 0.5rem 0;*/
     margin: 1rem 0;
     padding-left: 20px;
   }
@@ -190,7 +191,6 @@
     margin: 1rem 0;
     padding-left: 8px;
     position: relative;
-    /* box-sizing: border-box; */
   }
 
   li::before {
@@ -199,13 +199,8 @@
     left: -12px;
     height: calc(100% - 30px);
     content: "";
-    border-left: 2px solid #dfe0e1;
+    border-left: 2px solid var(--color-list-border); /* 使用变量 */
   }
-
-  /* li::marker {
-    color: var(--color-primary);
-    font-weight: bold;
-  } */
 
   /* 链接 */
   #post-content a {
@@ -219,8 +214,6 @@
   }
 
   #post-content a:hover {
-    /* text-decoration: underline; */
-
     transition: all 0.2s;
     background-size: 100% 100%;
     border-radius: 0.3rem;
@@ -232,64 +225,48 @@
 
   /* 引用 */
   blockquote {
-    color: var(--color-gray-dark);
-    background-color: var(--color-bg);
-    /*font-size: 0.8em;*/
+    color: var(--color-gray-dark); /* 使用变量 */
+    background-color: var(--color-bg); /* 使用变量 */
     border-left: 4px solid var(--color-primary);
     border-radius: 0 8px 8px 0;
     margin: 1rem 0;
     padding: 0.1rem 0.5rem 0.1rem 1.2rem;
   }
 
-  /*blockquote > p {*/
-  /*  margin: 0;*/
-  /*line-height: inherit !important; /* 覆盖内联样式 */
-  /*}*/
-
   /* 代码块 */
   code {
     font-size: 85%;
     padding: 2px 4px;
-    /* padding: 0.2rem 0.4rem; */
     border-radius: 6px;
     font-family: var(--font-mono);
-    background-color: var(--color-bg2);
+    background-color: var(--color-code-bg); /* 使用变量 */
   }
 
   pre {
-    /* color: var(--color-gray-dark); */
-    /* background-color: var(--color-bg); */
     padding: 8px;
     border-radius: 8px;
-    /* overflow-x: auto; */
     white-space: pre-wrap;
+    background-color: var(--color-bg2); /* 代码块背景色也使用变量 */
+    color: var(--color-text); /* 代码块文本颜色 */
   }
 
-  /* pre > code {
-    background-color: inherit;
-  } */
-
   /* 图片 */
-
   #post-content img {
     border-radius: 8px;
     margin: 0.5rem 0;
-    filter: drop-shadow(var(--color-shadow) 0px 6px 6px);
+    filter: drop-shadow(var(--color-shadow) 0px 6px 6px); /* 使用变量 */
   }
 
   /*表格*/
-
   table {
     width: 100%;
     display: table;
     border-collapse: collapse;
-    /*border-spacing: 0px;*/
-    /*margin: 0px 0px 20px;*/
   }
 
   table tr th,
   table tr td {
-    border: 1px solid #d9dfe4;
+    border: 1px solid var(--color-table-border); /* 使用变量 */
     padding: 5px 10px;
     text-align: justify;
   }
@@ -299,27 +276,19 @@
   }
 
   /* 按钮 */
-
   button.active {
     opacity: 0.5;
   }
 
   /*滚动条*/
-
   ::-webkit-scrollbar {
     width: 0.5rem;
     height: 0.5rem;
   }
 
-  /*::-webkit-scrollbar-track {*/
-  /*  border-radius: 8px;*/
-  /*}*/
-
   ::-webkit-scrollbar-thumb {
     border-radius: 8px;
-    /* background-color: rgba(179, 179, 179, 0.425); */
-    background-color: var(--color-gray-300);
-    /* background-color: var(--color-primary-800); */
+    background-color: var(--color-scrollbar-thumb); /* 使用变量 */
   }
 }
 
@@ -328,27 +297,22 @@
   .card {
     border-width: 1px;
     border-radius: var(--size-border-radius);
-    border-color: var(--color-gray-light);
+    border-color: var(--color-gray-light); /* 使用变量 */
     padding: 1rem;
-    background-color: var(--color-bg);
-    box-shadow: 0 0px 8px var(--color-shadow);
+    background-color: var(--color-bg); /* 使用变量 */
+    box-shadow: 0 0px 8px var(--color-shadow); /* 使用变量 */
   }
 
   .card-small {
     border-width: 1px;
     border-radius: var(--size-border-radius);
-    border-color: var(--color-gray-light);
+    border-color: var(--color-gray-light); /* 使用变量 */
     padding: 0.4rem 0.5rem;
-    box-shadow: 0 0 4px var(--color-shadow);
-    /* animation: float-in 0.5s 0.05s backwards; */
-    /* transition: all 0.2s; */
-    /* background-color: rgb(from var(--color-primary) r g b / 0.8); */
-    /* color: white; */
+    box-shadow: 0 0 4px var(--color-shadow); /* 使用变量 */
   }
 }
 
 /*top button*/
-
 .buttons {
   right: 1em;
   bottom: 5em;
@@ -360,12 +324,9 @@
   padding: 0.5em;
   display: block;
   cursor: pointer;
-  background: #fff;
-  background: var(--color-bg);
+  background: var(--color-bg); /* 使用变量 */
   border-radius: 0.25em;
-  /*border-radius: var(--radius);*/
-  border: 1px solid #eee;
-  /*border-color: var(--border);*/
+  border: 1px solid var(--color-border-light); /* 使用变量 */
   transform: translateX(5em);
   transition:
     color 0.3s,
@@ -380,46 +341,33 @@
 
 .to-top::before {
   width: 1.5em;
-  /* text-align: center; */
   color: var(--color-primary);
   fill: var(--color-primary);
   display: inline-block;
-  /* width: 24px; */
   height: 1.5rem;
   vertical-align: -0.125em;
+  /* SVG 颜色在深色模式下可能需要调整，这里假设通用 */
   content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none'%3E%3Cpath d='M24 0v24H0V0zM12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035q-.016-.005-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093q.019.005.029-.008l.004-.014l-.034-.614q-.005-.019-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z'/%3E%3Cpath fill='%23953232' d='M12.707 3.636a1 1 0 0 0-1.414 0L5.636 9.293a1 1 0 1 0 1.414 1.414L11 6.757V20a1 1 0 1 0 2 0V6.757l3.95 3.95a1 1 0 0 0 1.414-1.414z'/%3E%3C/g%3E%3C/svg%3E");
 }
 
 /*导航栏*/
-
 #navigation a {
-  color: black;
+  color: var(--color-text); /* 使用变量 */
   font-weight: bold;
   text-decoration: none;
 }
 
-/* @media screen and (max-width: 768px) {
- .nav-link {
-   display: block;
-   text-align: center;
- }
-} */
-
 /* index */
-
 .index-nav {
   padding: 10px;
   font-size: 1rem;
-  /* color: whitesmoke; */
-  /* background-color: var(--color-primary3); */
-  color: black;
-  background-color: whitesmoke;
+  color: var(--color-text); /* 使用变量 */
+  background-color: var(--color-bg2); /* 使用变量 */
   border-radius: 8px;
   text-decoration: none;
 }
 
 /* icon  */
-/* iconify 样式 */
 .iconify-inline {
   vertical-align: -0.125rem;
 }
@@ -440,20 +388,16 @@
 }
 
 /* 页码导航 */
-
 .pagination a {
-  color: #333;
-  /* font-size: 0.9375rem; */
-  /* font-size: 1.2rem; */
+  color: var(--color-text); /* 使用变量 */
 }
 
 /* 首页文章卡片 */
-
 .index-post-card {
   animation: float-in 0.5s 0.05s backwards;
   border-radius: 0.8rem;
-  background-color: #fff;
-  box-shadow: 0 0.1em 0.2em var(--color-shadow);
+  background-color: var(--color-bg); /* 使用变量 */
+  box-shadow: 0 0.1em 0.2em var(--color-shadow); /* 使用变量 */
   transition: all 0.2s;
   position: relative;
 }
@@ -471,7 +415,6 @@
 }
 
 .index-post-card > .post {
-  /* border-radius: 0.8rem; */
   position: relative;
 }
 
@@ -484,8 +427,7 @@
   width: min(320px, 50%);
   object-fit: cover;
   margin: 0;
-  mask: linear-gradient(90deg, transparent, #fff 50%);
-  /* filter: none; */
+  mask: linear-gradient(90deg, transparent, #fff 50%); /* 这个 mask 在深色模式下可能需要调整 */
   opacity: 0.8;
   position: absolute;
   top: 0;
@@ -494,32 +436,27 @@
   border-radius: 0 0.8em 0.8em 0;
 }
 
-/* .hover\:shadow-card:hover { */
-/*   box-shadow: */
-/*     0 0 15px #00000008, */
-/*     0 2px 30px #00000014, */
-/*     0 0 1px #0000004d; */
-/* } */
+@media (prefers-color-scheme: dark) {
+  .index-post-card > .cover {
+    /* 深色模式下可能需要调整 mask 或图片效果 */
+    mask: linear-gradient(90deg, transparent, #000 50%); /* 黑色作为 mask 背景 */
+  }
+}
 
 /* 目录 */
 #toc a {
-  /* color: #666; */
-  color: black;
+  color: var(--color-text); /* 使用变量 */
   opacity: 0.6;
   transition: all 200ms ease-in-out;
-  /* 💡 This small transition makes setting of the active state smooth */
 }
 #toc a:hover {
-  /* color: #333; */
   opacity: 0.9;
 }
 #toc .active > a {
-  /* color: black; */
   opacity: 1;
   font-weight: 600;
 }
 #toc .active {
-  /* color: black; */
   border-left-color: var(--color-primary);
   border-start-end-radius: 0.5rem;
   transition: all 200ms ease-in-out;
@@ -527,7 +464,7 @@
 
 #toc > div {
   padding: 0.2rem 0;
-  border-left: 3px solid #efefef;
+  border-left: 3px solid var(--color-border-light); /* 使用变量 */
 }
 #toc .toc-item-level-1 {
   padding-left: 10px;
@@ -543,7 +480,6 @@
 }
 
 /* License */
-
 #license {
   position: relative;
   overflow: hidden;
@@ -555,22 +491,42 @@
   top: 50%;
   right: -2rem;
   transform: translateY(-50%);
-
-  /* width: 100%; */
   height: 12rem;
+  /* SVG 颜色在深色模式下可能需要调整 */
   content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Cg fill='none' stroke='%23000' stroke-linecap='round' stroke-linejoin='round' stroke-width='1'%3E%3Cpath d='M.5 7a6.5 6.5 0 1 0 13 0a6.5 6.5 0 1 0-13 0'/%3E%3Cpath d='M6.046 5.6a1.05 1.05 0 0 0-.99-.7h-.7c-.58 0-1.05.47-1.05 1.05v2.1c0 .58.47 1.05 1.05 1.05h.7c.457 0 .846-.292.99-.7m4.648-2.8a1.05 1.05 0 0 0-.99-.7h-.7c-.58 0-1.05.47-1.05 1.05v2.1c0 .58.47 1.05 1.05 1.05h.7c.457 0 .846-.292.99-.7'/%3E%3C/g%3E%3C/svg%3E");
   opacity: 0.1;
   z-index: -1;
 }
 
+/* 如果 SVG 内部的颜色需要根据深色模式改变，你可以考虑：
+   1. 为深色模式提供另一个 `url()` 包含修改过的 SVG
+   2. 使用 CSS filter 属性尝试改变 SVG 颜色 (兼容性可能有限)
+   3. 将 SVG 内联到 HTML 中，然后直接用 CSS 改变 fill/stroke 属性
+*/
+@media (prefers-color-scheme: dark) {
+  #license-icon {
+    /* 例如，如果 SVG 内部的 stroke 是 #000，可以通过 filter 改变颜色 */
+    /* filter: invert(1) hue-rotate(180deg); */
+    /* 或者提供一个修改了 SVG 内部颜色的 data URI */
+    content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Cg fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='1'%3E%3Cpath d='M.5 7a6.5 6.5 0 1 0 13 0a6.5 6.5 0 1 0-13 0'/%3E%3Cpath d='M6.046 5.6a1.05 1.05 0 0 0-.99-.7h-.7c-.58 0-1.05.47-1.05 1.05v2.1c0 .58.47 1.05 1.05 1.05h.7c.457 0 .846-.292.99-.7m4.648-2.8a1.05 1.05 0 0 0-.99-.7h-.7c-.58 0-1.05.47-1.05 1.05v2.1c0 .58.47 1.05 1.05 1.05h.7c.457 0 .846-.292.99-.7'/%3E%3C/g%3E%3C/svg%3E");
+  }
+}
+
 #license .license-item {
   @apply text-gray text-sm;
+  color: var(--color-gray); /* 使用变量 */
 }
 
 /* 时效性提示 */
-
 .post-time-tips {
+  /* SVG 颜色在深色模式下可能需要调整，这里假设通用 */
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%230000001a' d='M12 21q-1.875 0-3.512-.712t-2.85-1.925t-1.925-2.85T3 12t.713-3.512t1.924-2.85t2.85-1.925T12 3q2.05 0 3.888.875T19 6.35V5q0-.425.288-.712T20 4t.713.288T21 5v4q0 .425-.288.713T20 10h-4q-.425 0-.712-.288T15 9t.288-.712T16 8h1.75q-1.025-1.4-2.525-2.2T12 5Q9.075 5 7.038 7.038T5 12t2.038 4.963T12 19q2.375 0 4.25-1.425t2.475-3.675q.125-.4.45-.6t.725-.15q.425.05.675.362t.15.688q-.725 2.975-3.15 4.888T12 21m1-9.4l2.5 2.5q.275.275.275.7t-.275.7t-.7.275t-.7-.275l-2.8-2.8q-.15-.15-.225-.337T11 11.975V8q0-.425.288-.712T12 7t.713.288T13 8z'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right;
+}
+
+@media (prefers-color-scheme: dark) {
+  .post-time-tips {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23ffffff1a' d='M12 21q-1.875 0-3.512-.712t-2.85-1.925t-1.925-2.85T3 12t.713-3.512t1.924-2.85t2.85-1.925T12 3q2.05 0 3.888.875T19 6.35V5q0-.425.288-.712T20 4t.713.288T21 5v4q0 .425-.288.713T20 10h-4q-.425 0-.712-.288T15 9t.288-.712T16 8h1.75q-1.025-1.4-2.525-2.2T12 5Q9.075 5 7.038 7.038T5 12t2.038 4.963T12 19q2.375 0 4.25-1.425t2.475-3.675q.125-.4.45-.6t.725-.15q.425.05.675.362t.15.688q-.725 2.975-3.15 4.888T12 21m1-9.4l2.5 2.5q.275.275.275.7t-.275.7t-.7.275t-.7-.275l-2.8-2.8q-.15-.15-.225-.337T11 11.975V8q0-.425.288-.712T12 7t.713.288T13 8z'/%3E%3C/svg%3E");
+  }
 }
