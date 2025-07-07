@@ -1,51 +1,51 @@
-/** @type {import('tailwindcss').Config} */
+// tailwind.config.js
 module.exports = {
-  content: [
-    './index.html',
-    './src/**/*.{js,ts,jsx,tsx,vue,html,css,liquid,php,go,md,mdx}', // 确保这里包含了所有您的文件类型
-    // 如果您的项目有其他文件夹，例如 layouts, components，也请添加到这里
-    './layouts/**/*.{html,js,ts,vue,jsx,tsx,liquid,php,go,md,mdx}',
-    './components/**/*.{html,js,ts,vue,jsx,tsx,liquid,php,go,md,mdx}',
-  ],
+  // ...
   theme: {
     extend: {
       colors: {
-        // 定义 neutral 灰色系，与您 main.css 中的变量保持一致
+        // 确保您的 neutral 色阶在这里完整且正确地映射到 CSS 变量
         neutral: {
           100: 'var(--color-neutral-100)',
-          600: 'var(--color-neutral-600)',
-          700: 'var(--color-neutral-700)',
-          // 如果您的 CSS 中还定义了其他 neutral-xxx 变量，请在这里也添加映射
-          // 例如：
-          // 200: 'var(--color-neutral-200)',
-          // 300: 'var(--color-neutral-300)',
-          // ...
+          200: 'var(--color-neutral-200)', // 根据您的 main.css 中的定义添加
+          300: 'var(--color-neutral-300)',
+          400: 'var(--color-neutral-400)',
+          500: 'var(--color-neutral-500)',
+          600: 'var(--color-neutral-600)', // 确保此项存在
+          700: 'var(--color-neutral-700)', // 确保此项存在
+          800: 'var(--color-neutral-800)',
+          900: 'var(--color-neutral-900)',
+          950: 'var(--color-neutral-950)',
         },
-        // 如果您在 main.css 中仍然有 --color-gray, --color-gray-light, --color-gray-dark，
-        // 并且希望继续使用 text-gray-light, text-gray-dark 这样的类名，
-        // 可以将它们映射为自定义的名称，例如 'custom-gray'，以避免与 Tailwind 内部的 'gray' 冲突。
-        'custom-gray': {
-          light: 'var(--color-gray-light)',
-          DEFAULT: 'var(--color-gray)', // 这将允许您使用 text-custom-gray
-          dark: 'var(--color-gray-dark)',
+        // 完全移除 'gray' 的 'DEFAULT' 映射
+        // 如果您的 HTML 中仍然使用了 text-gray-light 或 text-gray-dark
+        // 则保留 light 和 dark 的映射，但如果没有，也可以考虑移除整个 gray 对象
+        gray: {
+            light: 'var(--color-gray-light)',
+            // 移除 DEFAULT: 'var(--color-gray)',
+            dark: 'var(--color-gray-dark)',
         },
-        primary: {
-          50: 'var(--color-primary-50)',
-          100: 'var(--color-primary-100)',
-          200: 'var(--color-primary-200)',
-          300: 'var(--color-primary-300)',
-          400: 'var(--color-primary-400)',
-          500: 'var(--color-primary-500)',
-          600: 'var(--color-primary-600)',
-          700: 'var(--color-primary-700)',
-          800: 'var(--color-primary-800)',
-          900: 'var(--color-primary-900)',
-          950: 'var(--color-primary-950)',
-          DEFAULT: 'var(--color-primary)', // 这将允许您使用 text-primary
-          soft: 'var(--color-primary-soft)', // 确保这个也包含
-        },
+        primary: { /* ... 确保您的 primary 颜色定义正确 ... */ },
       },
+      // 可以在这里添加您的字体定义等
+      fontFamily: {
+        serif: 'var(--font-serif)',
+        sans: 'var(--font-sans-serif)', // 注意 Tailwind 默认是 sans 而非 sans-serif
+        mono: 'var(--font-mono)',
+      },
+      screens: {
+        sm: 'var(--breakpoint-sm)',
+        // ...其他断点
+      }
     },
   },
-  plugins: [], // 如果您有安装 @tailwindcss/typography，请确保它在这里
+  // 确保 Tailwind 扫描所有包含您 Tailwind 类名的文件
+  content: [
+    './src/**/*.{html,js,ts,vue,jsx,tsx}',
+    './layouts/**/*.{html,js}', // 如果您有 layouts 目录
+    './templates/**/*.{html,js}', // 如果您有 templates 目录
+    './index.html', // 你的入口 html
+    // ... 其他可能包含 Tailwind 类名的文件路径
+  ],
+  // ...
 };
