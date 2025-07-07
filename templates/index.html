@@ -127,5 +127,19 @@
     </main>
 
     <footer th:replace="~{module/footer}"></footer>
+
+    <script>
+      // 外部链接在新窗口打开，这是在任何页面都需要的功能
+      document.addEventListener("DOMContentLoaded", () => {
+        document.querySelectorAll("a[href^='https://']").forEach((link) => {
+          link.setAttribute("target", "_blank");
+          link.setAttribute("rel", "noopener");
+        });
+        
+        // 确保 main.js 中的主题切换初始化函数被调用
+        // main.js 中的 DOMContentLoaded 已经包含了 main.initThemeToggle()
+        // 所以这里不需要重复调用了
+      });
+    </script>
   </body>
 </html>
