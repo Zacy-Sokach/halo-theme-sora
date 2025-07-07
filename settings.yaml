@@ -10,6 +10,9 @@ spec:
         - $formkit: attachment
           name: avatar
           label: 头像
+        - $formkit: attachment
+          name: avatarDark
+          label: 头像（深色）
         - $formkit: radio
           name: rss
           label: RSS
