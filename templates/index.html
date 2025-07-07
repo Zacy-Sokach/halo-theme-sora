@@ -16,7 +16,6 @@
         <div class="flex flex-col items-center gap-5 font-mono">
           <div class="text-4xl" th:text="${site.title}"></div>
 
-          <!-- 社交媒体 -->
           <div class="text-center">
             <th:block th:each="item : ${theme?.config?.social?.socials}">
               <a class="text-black" th:href="@{${item.url}}">
@@ -40,18 +39,6 @@
                 ></span>
               </a>
             </th:block>
-            <!-- <a -->
-            <!--   class="icon" -->
-            <!--   th:href="@{${item?.type['url']}+${item?.input_value}}" -->
-            <!--   target="_blank" -->
-            <!--   th:attr="aria-label=${item?.type['aria-label']}" -->
-            <!-- > -->
-            <!--   <i -->
-            <!--     class="iconify-large" -->
-            <!--     th:attr="data-icon=${item?.type['icon']}" -->
-            <!--   ></i> -->
-            <!-- </a> -->
-
             <a
               class="text-black"
               th:if="${theme.config.general.rss == 1}"
@@ -61,7 +48,6 @@
             </a>
           </div>
 
-          <!-- 导航栏 -->
           <nav class="flex justify-center gap-3">
             <th:block th:with="menu = ${menuFinder.getPrimary()}">
               <th:block th:with="menuItems = ${menu.menuItems}">
@@ -79,14 +65,17 @@
             <a class="index-nav" href="javascript:SearchWidget.open()">
               <span class="iconify icon-[fa-solid--search]"></span>
             </a>
+
+            <button id="theme-toggle" class="index-nav" aria-label="Toggle dark mode">
+              <span id="sun-icon" class="iconify icon-[ph--sun-fill]"></span>
+              <span id="moon-icon" class="iconify icon-[ph--moon-fill] hidden"></span>
+            </button>
           </nav>
         </div>
       </div>
     </header>
 
     <main th:fragment="postList" class="mx-auto max-w-[768px]">
-      <!-- <div class="mb-6 ml-4 text-2xl">Recent Posts</div> -->
-
       <div class="flex flex-col gap-5">
         <a
           th:each="post : ${posts.items}"
@@ -100,14 +89,12 @@
           />
 
           <div class="post mx-4 my-4 flex flex-col gap-2">
-            <!-- 标题 -->
             <div
               th:text="${post.spec.title}"
               class="textc-primary font-serif font-semibold"
               style="font-size: 1.2rem"
             ></div>
 
-            <!-- 摘要 -->
             <div
               th:if="${#strings.isEmpty(post.spec.cover)}"
               th:text="${post.status.excerpt != null and #strings.length(post.status.excerpt) > 150} ? ${#strings.substring(post.status.excerpt, 0, 150)} + '...' : ${post.status.excerpt}"
@@ -121,18 +108,6 @@
               class="text-gray"
             ></div>
 
-            <!-- 深色模式 -->
-            <nav class="flex justify-center gap-3">
-              <a class="index-nav" href="javascript:SearchWidget.open()">
-                <span class="iconify icon-[fa-solid--search]"></span>
-              </a>
-              <button id="theme-toggle" class="index-nav" aria-label="Toggle dark mode">
-                <span id="sun-icon" class="iconify icon-[ph--sun-fill]"></span>
-                <span id="moon-icon" class="iconify icon-[ph--moon-fill] hidden"></span>
-                </button>
-            </nav>
-
-            <!-- 元信息 -->
             <div
               class="flex items-center justify-between"
               style="font-size: 0.8rem"
@@ -141,21 +116,6 @@
                 th:text="${#dates.format(post.spec.publishTime, 'yyyy-MM-dd')}"
                 class="text-gray"
               ></time>
-              <!-- 分类
-            <span
-              th:if="${not #lists.isEmpty(post.categories)}"
-              th:each="category : ${post.categories}"
-              class="category"
-              th:text="${category.spec.displayName}"
-            ></span> -->
-
-              <!-- Read More -->
-              <!-- <div class="h-100% flex items-center"> -->
-              <!-- <span class="textc-primary mr-0.5">Read More</span>
-            <div
-              class="i-material-symbols:arrow-right-alt-rounded textc-primary mt-0.5"
-            ></div> -->
-              <!-- </div> -->
             </div>
           </div>
         </a>
