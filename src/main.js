@@ -1,5 +1,5 @@
 import "./main.css";
-//import "./test/lapis.css";
+//import "./test/lapis.css"; // 如果不需要，请保持注释或删除
 
 export * from "./TOC.js";
 export * from "./upvote.js";
@@ -10,8 +10,8 @@ export * from "./linkIcon.js";
 window.main = {
   // 返回页首按钮的显示/隐藏逻辑
   to_top: function () {
-    var btn = document.getElementsByClassName("to-top")[0];
-    var scroll =
+    const btn = document.getElementsByClassName("to-top")[0];
+    const scroll =
       window.pageYOffset ||
       document.documentElement.scrollTop ||
       document.body.scrollTop;
@@ -86,20 +86,51 @@ window.main = {
 
   // 主题切换逻辑
   initThemeToggle: function () {
+    // 修正：删除重复的 themeToggle 声明
     const themeToggle = document.getElementById('theme-toggle');
     const htmlElement = document.documentElement; // <html> 标签
     const sunIcon = document.getElementById('sun-icon');
     const moonIcon = document.getElementById('moon-icon');
-    const themeToggle = document.getElementById('theme-toggle');
-  if (!themeToggle) {
-    console.warn('深色模式切换按钮未找到');
-    return;
 
-    // 初始化主题
+    // **修正：这里的 `if (!themeToggle)` 逻辑应该包含整个 `initThemeToggle` 的剩余部分，
+    // 或者在函数开头进行检查，避免后续代码依赖一个可能不存在的元素。
+    // 但是，考虑到我们希望即使没有按钮也能初始化主题，我们把按钮的隐藏/显示逻辑放在后面。**
+
+    // 获取主题配置
+    // 确保 window.themeConfig 存在，并从 general 组获取设置
+    const defaultThemeMode = window.themeConfig?.general?.default_theme_mode || 'system';
+    const enableThemeToggleButton = window.themeConfig?.general?.enable_theme_toggle_button === '1'; // 注意：Halo 后台开关值是字符串 '1' 或 '0'
+
+    // 根据后台配置决定是否显示主题切换按钮
+    if (themeToggle) {
+      if (enableThemeToggleButton) {
+        themeToggle.style.display = 'block'; // 显示按钮
+      } else {
+        themeToggle.style.display = 'none'; // 隐藏按钮
+      }
+    } else {
+      // 如果按钮本身就不存在，发出警告（仅在调试时有用）
+      console.warn('主题切换按钮（#theme-toggle）未找到。');
+    }
+
+    // 初始化主题：根据 localStorage 存储的偏好，或后台设置的默认模式，或系统偏好设置
     const savedTheme = localStorage.getItem('theme');
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
-    if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+    let currentTheme = '';
+    if (savedTheme) { // 优先使用用户在 localStorage 中保存的设置
+      currentTheme = savedTheme;
+    } else { // 如果没有保存的设置，则根据后台配置的默认模式或系统偏好
+      if (defaultThemeMode === 'dark') {
+        currentTheme = 'dark';
+      } else if (defaultThemeMode === 'light') {
+        currentTheme = 'light';
+      } else { // defaultThemeMode === 'system'
+        currentTheme = prefersDark ? 'dark' : 'light';
+      }
+    }
+
+    if (currentTheme === 'dark') {
       htmlElement.classList.add('dark');
     } else {
       htmlElement.classList.remove('dark');
@@ -116,19 +147,19 @@ window.main = {
       }
     }
 
-    // 添加按钮点击事件监听器
-    if (themeToggle) {
+    // 添加按钮点击事件监听器（只有当按钮存在且被启用时才添加）
+    if (themeToggle && enableThemeToggleButton) {
       themeToggle.addEventListener('click', () => {
-        htmlElement.classList.toggle('dark');
+        htmlElement.classList.toggle('dark'); // 切换 dark 类
 
         if (htmlElement.classList.contains('dark')) {
-          localStorage.setItem('theme', 'dark');
+          localStorage.setItem('theme', 'dark'); // 保存用户选择到 localStorage
           if (sunIcon && moonIcon) {
             sunIcon.classList.add('hidden');
             moonIcon.classList.remove('hidden');
           }
         } else {
-          localStorage.setItem('theme', 'light');
+          localStorage.setItem('theme', 'light'); // 保存用户选择到 localStorage
           if (sunIcon && moonIcon) {
             sunIcon.classList.remove('hidden');
             moonIcon.classList.add('hidden');
@@ -137,9 +168,9 @@ window.main = {
       });
     }
 
-    // 监听系统主题变化，如果用户没有手动选择主题，则响应系统变化
+    // 监听系统主题变化：仅当用户未手动选择主题，并且后台配置为“跟随系统”时才响应
     window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (event) => {
-      if (!localStorage.getItem('theme')) { // 仅当用户未手动设置主题时才响应
+      if (!localStorage.getItem('theme') && defaultThemeMode === 'system') {
         if (event.matches) {
           htmlElement.classList.add('dark');
           if (sunIcon && moonIcon) {
